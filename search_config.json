@@ -1,0 +1,13 @@
+{
+  "job_titles": [
+    "Data Scientist",
+    "AI Engineer",
+    "Machine Learning Engineer",
+    "Python Developer"
+  ],
+  "locations": [
+    "Paris",
+    "Remote"
+  ],
+  "max_results_per_search": 10
+}
