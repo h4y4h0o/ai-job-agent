@@ -1,0 +1,112 @@
+FULL NAME: Zahra Vahidi Ferdousi
+LOCATION: Paris Area, France
+EMAIL: zahra.vahidiferdousi@gmail.com
+PHONE: +33618523722
+LINKEDIN: www.linkedin.com/in/zahra-vahidi-ferdousi
+
+================================================================================
+PROFESSIONAL SUMMARY
+================================================================================
+
+Data Scientist combining strong analytical rigor with practical business acumen. Leveraging a PhD in Artificial
+Intelligence and expertise in statistical modeling, I transform complex datasets into actionable strategies. Skilled
+in the full data lifecycle, from EDA and feature engineering to building predictive models using Python.
+
+================================================================================
+TECHNICAL SKILLS
+================================================================================
+
+Programming Languages:
+- Python (Intermediate)
+- Java (Intermediate)
+- SQL (Intermediate)
+
+AI & Machine Learning:
+- LangChain (Learning)
+- n8n Workflow Automation (Learning)
+- Working with LLM APIs (Claude, OpenAI)
+
+Tools & Technologies:
+- Git & GitHub
+- Docker (Beginner)
+- VS Code
+- Jupyter Notebooks
+- Google Agent Development Kit (Beginner)
+
+Data & Databases:
+- Pandas (Intermediate)
+- Numpy (Intermediate)
+- Scikit-learn (Intermediate)
+- Beautiful Soup (Beginner)
+- Matplotlib (Intermediate)
+- Seaborn (Intermediate)
+- Plotly (Beginner)
+- Folium (Beginner)
+- Dash (Beginner)
+
+================================================================================
+EXPERIENCE
+================================================================================
+
+Research & Developement Engineer at Capgemini engineering
+September 2021 - August 2022 | Meudon
+
+- Engineered a Java-based synthetic data generation pipeline to train Computer Vision models on 2D CAD drawings,
+significantly improving object segmentation accuracy.
+
+[Add more jobs if you have them]
+
+[If you don't have experience yet, write:]
+
+PROJECTS & LEARNING:
+
+AI Job Application Agent (Current)
+- Building an automated job search and application assistant using Python, LangChain, and n8n
+- Implementing AI-powered job-CV matching using Claude API
+- Creating automated workflows for daily job notifications
+
+[Add any other projects, even small ones]
+
+================================================================================
+EDUCATION
+================================================================================
+
+[PhD] in [Computer Science]
+[PSL]
+[2016] - [2020] | [Paris]
+
+- [Relevant coursework or achievements]
+
+[Master] in [NLP]
+[Sorbonne University]
+[2014] - [2015] | [Paris]
+
+[Master] in [Artificial Intelligence]
+[Sorbonne University]
+[2011] - [2013] | [Paris]
+
+[Bachelor] in [Computer engineering]
+[Shahid Beheshti University]
+[2007] - [2011] | [Tehran - Iran]
+
+- [Relevant coursework or achievements]
+
+================================================================================
+CERTIFICATIONS & COURSES
+================================================================================
+
+- [IBM Data Science Professional Certification] - [Coursera] ([2025])
+
+================================================================================
+LANGUAGES
+================================================================================
+
+- [French]: [Native]
+- [English]: [Intermediate]
+- [Farsi]: [Native]
+
+================================================================================
+INTERESTS & OTHER
+================================================================================
+
+[Optional: Hobbies, volunteer work, publications, etc.]
