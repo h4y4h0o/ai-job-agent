@@ -1,5 +1,12 @@
 # AI Job Application Agent
 
+# AI Job Application Agent
+
+![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)
+![Flask](https://img.shields.io/badge/Flask-3.0+-green.svg)
+![LangChain](https://img.shields.io/badge/LangChain-Latest-orange.svg)
+![Status](https://img.shields.io/badge/Status-In%20Development-yellow.svg)
+
 An intelligent job search assistant that uses AI to analyze job postings and match them with your CV.
 
 ## Features
@@ -124,7 +131,7 @@ MIT License - Feel free to use this for your own projects!
 
 ## Contact
 
-Created by [Your Name] - [Your LinkedIn/Email]
+Created by Zahra Vahidi Ferdousi - zahra.vahidiferdousi@gmail.com - https://www.linkedin.com/in/zahra-vahidi-ferdousi/
 
 ## Acknowledgments
 
