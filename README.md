@@ -124,7 +124,7 @@ MIT License - Feel free to use this for your own projects!
 
 ## Contact
 
-Created by [Your Name] - [Your LinkedIn/Email]
+Created by Zahra Vahidi Ferdousi - https://www.linkedin.com/in/zahra-vahidi-ferdousi/ - zahra.vahidiferdousi@gmail.com
 
 ## Acknowledgments
 
