@@ -1,7 +1,5 @@
 # AI Job Application Agent
 
-# AI Job Application Agent
-
 ![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)
 ![Flask](https://img.shields.io/badge/Flask-3.0+-green.svg)
 ![LangChain](https://img.shields.io/badge/LangChain-Latest-orange.svg)
