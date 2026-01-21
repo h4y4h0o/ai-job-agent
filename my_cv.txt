@@ -47,16 +47,28 @@ Data & Databases:
 ================================================================================
 EXPERIENCE
 ================================================================================
+Data Scientist/Analyst Freelance
+September 2022 - September 2023
+
+- Developed and optimized advanced SQL queries to extract, transform, and analyze datasets.
+- Conducted exploratory data analysis (EDA) using Python libraries such as Pandas and NumPy. 
+- Developed impactful data visualizations with Matplotlib and Seaborn to effectively communicate insights. 
+- Leveraged Scikit-learn for statistical modeling and predictive analysis, enhancing decision-making for stakeholders.
 
 Research & Developement Engineer at Capgemini engineering
 September 2021 - August 2022 | Meudon
 
-- Engineered a Java-based synthetic data generation pipeline to train Computer Vision models on 2D CAD drawings,
-significantly improving object segmentation accuracy.
+- Engineered a Java-based synthetic data generation pipeline for training Computer Vision models. 
+- Focused on improving object segmentation accuracy using 2D CAD drawings. 
+- Collaborated with cross-functional teams to enhance model performance. 
+- Developed skills in Java programming, data generation, and computer vision technologies.
 
-[Add more jobs if you have them]
+Research Engineer at Coheris
+April 2016 - July 2019 | Suresnes
 
-[If you don't have experience yet, write:]
+- Developed a context-aware recommendation system in Java, enhancing user experience through personalized suggestions. 
+- Modeled contextual influence on user ratings using Pearson correlation to improve recommendation accuracy. 
+- Designed pre-filtering and post-filtering approaches, significantly reducing sparsity compared to state-of-the-art methods.
 
 PROJECTS & LEARNING:
 
@@ -64,8 +76,6 @@ AI Job Application Agent (Current)
 - Building an automated job search and application assistant using Python, LangChain, and n8n
 - Implementing AI-powered job-CV matching using Claude API
 - Creating automated workflows for daily job notifications
-
-[Add any other projects, even small ones]
 
 ================================================================================
 EDUCATION
@@ -75,7 +85,7 @@ EDUCATION
 [PSL]
 [2016] - [2020] | [Paris]
 
-- [Relevant coursework or achievements]
+- Machine Learning
 
 [Master] in [NLP]
 [Sorbonne University]
@@ -89,7 +99,8 @@ EDUCATION
 [Shahid Beheshti University]
 [2007] - [2011] | [Tehran - Iran]
 
-- [Relevant coursework or achievements]
+- Programming
+- Databases (SQL)
 
 ================================================================================
 CERTIFICATIONS & COURSES
