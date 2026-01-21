@@ -31,10 +31,15 @@ An intelligent job search assistant that uses AI to analyze job postings and mat
 - ✅ Flask API with job analysis endpoint
 - ✅ Claude AI integration
 - ✅ CV parsing and comparison logic
+- ✅ Job search automation with Adzuna API
+- ✅ n8n workflow automation (Day 4 complete!)
+  - Scheduled job searches
+  - Automated AI analysis
+  - Job filtering by fit score
+  - Results aggregation
+  - Email notifications
 
 ### In Progress:
-- 🔄 Job search automation (Day 3)
-- 🔄 n8n workflow integration (Day 4)
 - 🔄 Dashboard interface (Day 5)
 
 ## Setup Instructions
