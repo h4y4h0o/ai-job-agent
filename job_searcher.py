@@ -177,6 +177,9 @@ def main():
 
         with open(filename, "w", encoding="utf-8") as f:
             json.dump(jobs, f, indent=2, ensure_ascii=False)
+        # Also save as job_results.json for n8n workflow
+        with open('job_results.json', 'w') as f:
+            json.dump(jobs, f, indent=2)
 
         print(f"\n💾 Results saved to: {filename}")
 

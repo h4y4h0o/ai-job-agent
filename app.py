@@ -219,6 +219,36 @@ def test():
         return analyze_fit()
 
 
+@app.route("/save-results", methods=["POST"])
+def save_results():
+    """Endpoint for n8n to save job results"""
+    try:
+        data = request.json
+        filepath = os.path.join(os.path.dirname(__file__), "job_results.json")
+
+        # Save to file
+        with open(filepath, "w") as f:
+            json.dump(data, f, indent=2)
+
+        jobs_count = 0
+        if isinstance(data, list) and len(data) > 0:
+            if "data" in data[0]:
+                jobs_count = len(data[0]["data"])
+
+        print(f"✅ Saved {jobs_count} jobs to {filepath}")
+
+        return jsonify(
+            {
+                "status": "success",
+                "message": f"Saved {jobs_count} jobs",
+                "filepath": filepath,
+            }
+        )
+    except Exception as e:
+        print(f"❌ Error saving results: {e}")
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+
 # Start the server
 if __name__ == "__main__":
     print("=" * 60)

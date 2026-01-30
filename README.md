@@ -7,24 +7,89 @@
 
 An intelligent job search assistant that uses AI to analyze job postings and match them with your CV.
 
-## Features
 
+## What it does
+
+- ⚙️ Searches for jobs daily across multiple job boards using Adzuna API
 - 🤖 AI-powered job fit analysis using Claude API
-- 📊 Scoring system (0-100) for job-candidate matching
+- 📊 Scoring system (0-100) for job-candidate matching and filters results to show only relevant opportunities (≥65% match)
 - 🎯 Identifies matching and missing skills
 - 💡 Provides personalized application recommendations
+- 📧 Emails you daily with top matches and detailed recommendations
+- 📈 Displays results in a beautiful web dashboard with statistics
 - 🔄 RESTful API for easy integration
 
-## Tech Stack
 
-- **Backend:** Python, Flask
-- **AI:** Anthropic Claude API, LangChain
-- **Automation:** n8n
-- **APIs:** Adzuna Job Search API
+## 🚀 Features
+
+### ✅ Automated Job Discovery
+- Searches multiple job titles simultaneously
+- Configurable search criteria (location, keywords)
+- Daily automated execution via n8n scheduler
+
+### ✅ AI-Powered Analysis
+- Claude AI analyzes each job description
+- Compares against your CV automatically
+- Calculates 4-component fit score
+- Identifies matching and missing skills
+
+### ✅ Smart Filtering
+- Only shows jobs ≥65% fit score
+- Priority categorization (High/Medium/Low)
+- "Should Apply" recommendations
+
+### ✅ Rich Notifications
+- Daily email digest with top matches
+- Score breakdowns and skill analysis
+- Direct links to job postings
+- AI-generated application recommendations
+
+### ✅ Visual Dashboard
+- Real-time statistics and trends
+- Sortable job cards with full details
+- Skills gap analysis
+- Mobile-responsive design
+
+
+## 📸 Screenshots
+
+### 🔄 n8n Automation Workflow
+![n8n Workflow](screenshots/n8n-workflow.png)
+*Complete automation pipeline: search → analyze → filter → notify*
+
+### 📧 Email Notification
+![Email Digest](screenshots/email.png)
+*Daily email with top job matches and AI recommendations*
+
+### 📊 Dashboard View
+![AI Job Agent Dashboard](screenshots/dashboard.png)
+*Real-time job matching dashboard with statistics, scores, and skill analysis*
+
+
+## 🛠️ Tech Stack
+
+**Backend:**
+- Python 3.x
+- Flask (API & Dashboard)
+- Claude AI (Anthropic API)
+- SQLite (n8n data)
+
+**Automation:**
+- n8n (Workflow orchestration)
+- Docker (n8n containerization)
+
+**APIs:**
+- Adzuna API (Job search)
+- Anthropic Claude API (AI analysis)
+- Gmail API (Notifications)
+
+**Frontend:**
+- Jinja2 Templates
+- Custom CSS (No frameworks)
+- Responsive design
+
 
 ## Project Status
-
-🚧 **In Development** - Week 1, Day 5 Complete
 
 ### Completed:
 - ✅ Development environment setup
@@ -40,8 +105,68 @@ An intelligent job search assistant that uses AI to analyze job postings and mat
   - Email notifications
 - ✅ Dashboard to visualize job matches
 
-### In Progress:
-- 🔄 Dashboard interface (Day 5)
+
+## 🤖 How It Works
+```
+┌─────────────┐
+│   n8n       │  Scheduler (runs daily)
+└──────┬──────┘
+       │
+       ├──────────────────────────────┐
+       │                              │
+       ▼                              ▼
+┌──────────────┐           ┌─────────────────┐
+│ job_searcher │           │   Flask API     │
+│ Adzuna API   ├──jobs────▶│   Claude AI     │
+└──────────────┘           └────────┬────────┘
+                                    │
+                                    │ analysis
+                                    ▼
+                          ┌─────────────────┐
+                          │  Filter (≥65)   │
+                          │  Save results   │
+                          │  Send email     │
+                          └────────┬────────┘
+                                   │
+                                   ▼
+                          ┌─────────────────┐
+                          │   Dashboard     │
+                          │  Visualize      │
+                          └─────────────────┘
+```
+
+
+## 📊 Components
+
+### 1. Flask API (`app.py`) - Port 5000
+- Analyzes job postings against your CV using Claude AI
+- Calculates comprehensive fit scores (0-100)
+- Provides skill matching and gap analysis
+- Generates personalized recommendations
+
+**Scoring System:**
+- Skills Match (40 points): Technical skills alignment
+- Experience Level (30 points): Seniority fit
+- Domain/Industry (20 points): Relevant domain knowledge
+- Other Factors (10 points): Location, culture fit, etc.
+
+### 2. n8n Workflow Automation - Port 5678
+Complete automated pipeline with 12+ nodes:
+- **Adzuna API Integration**: Searches 20+ jobs daily
+- **Job Analysis Loop**: Processes each job through AI
+- **Intelligent Filtering**: Only jobs scoring ≥65%
+- **Data Aggregation**: Combines and sorts results
+- **Email Generation**: Beautiful HTML emails with details
+- **Gmail Integration**: Automatic daily notifications
+
+### 3. Web Dashboard (`dashboard.py`) - Port 5001
+Beautiful, responsive web interface featuring:
+- **Statistics Overview**: Total matches, average scores, priority breakdown
+- **Job Cards**: Detailed view with scores, skills, recommendations
+- **Skills Analysis**: Matching vs. missing skills visualization
+- **Priority Badges**: High/Medium/Low color-coded indicators: Green (75+), Yellow (65-74), Red (<65)
+- **Top Skills**: Most in-demand skills you should learn
+
 
 ## Setup Instructions
 
@@ -88,7 +213,6 @@ Edit `search_config.json` with your job preferences:
   "max_results": 20
 }
 ```
-
 
 7. Run the Flask API
 ```bash
@@ -170,34 +294,6 @@ GET http://127.0.0.1:5001/api/jobs
 GET http://127.0.0.1:5001/api/stats
 ```
 
-## 🤖 How It Works
-```
-┌─────────────┐
-│   n8n       │  Scheduler (runs daily)
-└──────┬──────┘
-       │
-       ├──────────────────────────────┐
-       │                              │
-       ▼                              ▼
-┌──────────────┐           ┌─────────────────┐
-│ job_searcher │           │   Flask API     │
-│ Adzuna API   ├──jobs────▶│   Claude AI     │
-└──────────────┘           └────────┬────────┘
-                                    │
-                                    │ analysis
-                                    ▼
-                          ┌─────────────────┐
-                          │  Filter (≥65)   │
-                          │  Save results   │
-                          │  Send email     │
-                          └────────┬────────┘
-                                   │
-                                   ▼
-                          ┌─────────────────┐
-                          │   Dashboard     │
-                          │  Visualize      │
-                          └─────────────────┘
-```
 
 ## 📊 Sample Output
 
@@ -231,12 +327,6 @@ ai-job-agent/
 └── .env                   # Your API keys (create this)
 ```
 
-## 🎨 Dashboard Features
-
-- **Statistics Cards**: Total jobs, average fit score, match categories
-- **Job Cards**: Each job with title, company, fit score, skills
-- **Skills Tracker**: Most in-demand skills from job postings
-- **Color-coded Scores**: Green (75+), Yellow (65-74), Red (<65)
 
 ## 🔒 Security Notes
 

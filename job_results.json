@@ -1,78 +1,83 @@
 [
   {
-    "title": "AI Engineer",
-    "company": "TechCorp",
-    "location": "London",
-    "fit_score": 82,
-    "matching_skills": [
-      "Python",
-      "Machine Learning",
-      "Flask",
-      "API Development",
-      "Git"
-    ],
-    "missing_skills": [
-      "Kubernetes",
-      "TensorFlow",
-      "AWS"
-    ],
-    "recommendation": "Strong match! Your Python and ML skills align well. Consider learning Kubernetes."
-  },
-  {
-    "title": "Machine Learning Engineer",
-    "company": "DataScience Ltd",
-    "location": "Remote",
-    "fit_score": 78,
-    "matching_skills": [
-      "Python",
-      "Data Analysis",
-      "LangChain",
-      "API Integration"
-    ],
-    "missing_skills": [
-      "PyTorch",
-      "MLOps",
-      "Docker",
-      "Airflow"
-    ],
-    "recommendation": "Good fit. Your LangChain experience is a plus. Focus on MLOps skills."
-  },
-  {
-    "title": "Senior Data Scientist",
-    "company": "Analytics Pro",
-    "location": "Manchester",
-    "fit_score": 71,
-    "matching_skills": [
-      "Python",
-      "Data Analysis",
-      "Statistics",
-      "Pandas"
-    ],
-    "missing_skills": [
-      "Deep Learning",
-      "Scala",
-      "Spark",
-      "R"
-    ],
-    "recommendation": "Decent match. Strong fundamentals, but lacking some advanced tools."
-  },
-  {
-    "title": "AI Solutions Architect",
-    "company": "CloudTech",
-    "location": "London",
-    "fit_score": 85,
-    "matching_skills": [
-      "Python",
-      "LangChain",
-      "API Design",
-      "Claude API",
-      "Multi-agent Systems"
-    ],
-    "missing_skills": [
-      "Azure",
-      "Solution Architecture",
-      "Enterprise Sales"
-    ],
-    "recommendation": "Excellent match! Your agent development skills are exactly what they need!"
+    "json": {
+      "data": [
+        {
+          "title": "=Junior Data Analyst",
+          "company": "=Information Tech Consultants",
+          "location": null,
+          "url": null,
+          "overall_score": 78,
+          "priority": "High",
+          "should_apply": true,
+          "matching_skills": [
+            "Python (Intermediate)",
+            "SQL (Intermediate)",
+            "Data pipeline experience",
+            "Pandas",
+            "NumPy",
+            "Data analysis",
+            "EDA",
+            "Statistical modeling",
+            "Git & GitHub"
+          ],
+          "missing_skills": [
+            "Big Data platforms (Hadoop, Spark)",
+            "Data engineering focus",
+            "ETL processes",
+            "Cloud platforms",
+            "Data quality frameworks",
+            "Streaming data processing"
+          ],
+          "recommendation": "Very good candidate with strong foundational skills. Your Python and SQL proficiency, combined with data analysis experience, align well with the role. However, you may need to emphasize your data pipeline work from Capgemini and highlight transferable skills from your research background. The PhD might be overqualified for a junior role, but your practical experience balances this well.",
+          "skills_match_score": 32,
+          "experience_score": 22,
+          "domain_score": 16,
+          "other_score": 8,
+          "analyzed_at": "2026-01-30T10:10:16.956Z"
+        },
+        {
+          "title": "=Data Analytics Consultant",
+          "company": "=Westfield Insurance",
+          "location": null,
+          "url": null,
+          "overall_score": 72,
+          "priority": "Medium",
+          "should_apply": true,
+          "matching_skills": [
+            "Python",
+            "SQL",
+            "Data Analytics",
+            "Statistical Modeling",
+            "Pandas",
+            "NumPy",
+            "Data Visualization",
+            "Machine Learning",
+            "Scikit-learn",
+            "EDA",
+            "Data Pipeline Development"
+          ],
+          "missing_skills": [
+            "Data Engineering Architecture",
+            "Cloud Platforms (AWS/Azure/GCP)",
+            "Big Data Technologies",
+            "ETL Tools",
+            "Data Warehousing",
+            "Spark/Hadoop",
+            "Advanced SQL/Database Design",
+            "Agile Methodology Experience"
+          ],
+          "recommendation": "Good fit worth applying. Your strong analytical background, PhD in AI, and hands-on data science experience align well with the analytics aspects. However, this role emphasizes data engineering and architecture which requires skills you're still developing. Your freelance experience and current AI projects show adaptability. The consulting nature matches your diverse project experience.",
+          "skills_match_score": 28,
+          "experience_score": 22,
+          "domain_score": 15,
+          "other_score": 7,
+          "analyzed_at": "2026-01-30T10:10:36.397Z"
+        }
+      ]
+    },
+    "pairedItem": {
+      "item": 0
+    }
   }
 ]

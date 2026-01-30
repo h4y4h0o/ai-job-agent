@@ -33,3 +33,5 @@ test_app.py
 
 # Temporary files
 *.tmp
+
+n8n-credentials.txt
