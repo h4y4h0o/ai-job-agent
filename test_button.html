@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Button Test</title>
+</head>
+<body>
+    <button onclick="testFunction(0, 'fr')">Test Button 1</button>
+    <button onclick="testFunction(1, 'en')">Test Button 2</button>
+    
+    <script>
+        function testFunction(index, lang) {
+            console.log('Index:', index, 'Language:', lang);
+            alert(`Index: ${index}, Language: ${lang}`);
+        }
+    </script>
+</body>
+</html>

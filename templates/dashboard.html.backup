@@ -288,136 +288,82 @@
                 grid-template-columns: 1fr;
             }
         }
-        /* Cover Letter Button Styles */
-        .cover-letter-btn {
-            color: white;
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 0.95em;
-            transition: transform 0.2s, box-shadow 0.2s;
-            min-width: 180px;
-        }
-
-        .cover-letter-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        .cover-letter-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .cover-letter-btn-fr {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-
-        .cover-letter-btn-en {
-            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
-        }
-
-        /* Modal Styles */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            animation: fadeIn 0.3s;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .modal-content {
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            max-width: 800px;
-            max-height: 80vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            animation: slideUp 0.3s;
-        }
-
-        @keyframes slideUp {
-            from {
-                transform: translateY(50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .modal-header {
-            margin-top: 0;
-            color: #2d3748;
-            font-size: 1.8em;
-        }
-
-        .modal-meta {
-            color: #718096;
-            margin-bottom: 20px;
-            font-size: 0.95em;
-        }
-
-        .modal-body {
-            white-space: pre-wrap;
-            line-height: 1.8;
-            font-family: Georgia, serif;
-            color: #2d3748;
-            margin: 20px 0;
-        }
-
-        .modal-actions {
-            margin-top: 30px;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .modal-btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 0.95em;
-            transition: all 0.2s;
-        }
-
-        .modal-btn-copy {
-            background: #48bb78;
-            color: white;
-        }
-
-        .modal-btn-copy:hover {
-            background: #38a169;
-        }
-
-        .modal-btn-close {
-            background: #cbd5e0;
-            color: #2d3748;
-        }
-
-        .modal-btn-close:hover {
-            background: #a0aec0;
-        }
     </style>
 </head>
+<script>
+function generateCoverLetter(jobIndex) {
+    const button = event.target;
+    button.disabled = true;
+    button.textContent = '⏳ Generating...';
+    
+    fetch(`/generate-cover-letter/${jobIndex}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.cover_letter) {
+                // Show cover letter in modal
+                showCoverLetterModal(data);
+                button.textContent = '✅ Generated!';
+                setTimeout(() => {
+                    button.textContent = '📝 Generate Cover Letter';
+                    button.disabled = false;
+                }, 2000);
+            } else {
+                alert('Error generating cover letter');
+                button.disabled = false;
+                button.textContent = '📝 Generate Cover Letter';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to generate cover letter');
+            button.disabled = false;
+            button.textContent = '📝 Generate Cover Letter';
+        });
+}
+
+function showCoverLetterModal(data) {
+    // Create modal
+    const modal = document.createElement('div');
+    modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1000;';
+    
+    modal.innerHTML = `
+        <div style="background: white; padding: 40px; border-radius: 15px; max-width: 800px; max-height: 80vh; overflow-y: auto;">
+            <h2 style="margin-top: 0;">📝 Cover Letter</h2>
+            <p style="color: #666; margin-bottom: 20px;">
+                ${data.job_title} at ${data.company} | ${data.word_count} words
+            </p>
+            <div style="white-space: pre-wrap; line-height: 1.8; font-family: Georgia, serif;">
+                ${data.cover_letter}
+            </div>
+            <div style="margin-top: 30px; display: flex; gap: 10px;">
+                <button onclick="copyCoverLetter('${data.cover_letter.replace(/'/g, "\\'")}')
+                        style="background: #48bb78; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer;">
+                    📋 Copy to Clipboard
+                </button>
+                <button onclick="this.closest('div').parentElement.parentElement.remove()" 
+                        style="background: #cbd5e0; color: #2d3748; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer;">
+                    Close
+                </button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Close on outside click
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.remove();
+        }
+    });
+}
+
+function copyCoverLetter(text) {
+    navigator.clipboard.writeText(text).then(() => {
+        alert('✅ Cover letter copied to clipboard!');
+    });
+}
+</script>
 <body>
     <div class="container">
         <div class="header">
@@ -560,97 +506,5 @@
         </div>
         {% endif %}
     </div>
-    
-<script>
-function generateCoverLetter(jobIndex, language) {
-    const button = event.target;
-    const originalText = button.textContent;
-    button.disabled = true;
-    button.textContent = language === 'fr' ? '⏳ Génération...' : '⏳ Generating...';
-    
-    fetch(`/generate-cover-letter/${jobIndex}?language=${language}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.cover_letter) {
-                showCoverLetterModal(data, language);
-                button.textContent = language === 'fr' ? '✅ Généré!' : '✅ Generated!';
-                setTimeout(() => {
-                    button.textContent = originalText;
-                    button.disabled = false;
-                }, 2000);
-            } else {
-                alert(language === 'fr' ? 'Erreur lors de la génération' : 'Error generating cover letter');
-                button.disabled = false;
-                button.textContent = originalText;
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert(language === 'fr' ? 'Échec de la génération' : 'Failed to generate cover letter');
-            button.disabled = false;
-            button.textContent = originalText;
-        });
-}
-
-function showCoverLetterModal(data, language) {
-    const modal = document.createElement('div');
-    modal.className = 'modal-overlay';
-    modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1000;';
-    
-    const languageLabel = language === 'fr' ? 'Français' : 'English';
-    const copyLabel = language === 'fr' ? '📋 Copier' : '📋 Copy';
-    const closeLabel = language === 'fr' ? 'Fermer' : 'Close';
-    
-    const coverLetter = data.cover_letter.replace(/\n/g, '<br>');
-    
-    modal.innerHTML = `
-        <div style="background: white; padding: 40px; border-radius: 15px; max-width: 800px; max-height: 80vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
-            <h2 style="margin-top: 0; color: #2d3748; font-size: 1.8em;">📝 ${language === 'fr' ? 'Lettre de Motivation' : 'Cover Letter'}</h2>
-            <p style="color: #718096; margin-bottom: 20px; font-size: 0.95em;">
-                <strong>${data.job_title}</strong> at <strong>${data.company}</strong><br>
-                ${data.word_count} ${language === 'fr' ? 'mots' : 'words'} | ${languageLabel}
-            </p>
-            <div style="white-space: pre-wrap; line-height: 1.8; font-family: Georgia, serif; color: #2d3748; margin: 20px 0;">
-                ${coverLetter}
-            </div>
-            <div style="margin-top: 30px; display: flex; gap: 10px; flex-wrap: wrap;">
-                <button onclick="copyCoverLetter(\`${data.cover_letter.replace(/`/g, '\\`')}\`, '${language}')" 
-                        style="background: #48bb78; color: white; padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">
-                    ${copyLabel}
-                </button>
-                <button onclick="closeModal()" 
-                        style="background: #cbd5e0; color: #2d3748; padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">
-                    ${closeLabel}
-                </button>
-            </div>
-        </div>
-    `;
-    
-    document.body.appendChild(modal);
-    
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            closeModal();
-        }
-    });
-}
-
-function copyCoverLetter(text, language) {
-    navigator.clipboard.writeText(text).then(() => {
-        const message = language === 'fr' ? '✅ Lettre copiée!' : '✅ Copied!';
-        alert(message);
-    }).catch(err => {
-        alert(language === 'fr' ? '❌ Échec de la copie' : '❌ Copy failed');
-    });
-}
-
-function closeModal() {
-    const modal = document.querySelector('.modal-overlay');
-    if (modal) {
-        modal.remove();
-    }
-}
-</script>
-
 </body>
 </html>

@@ -122,5 +122,37 @@ def api_stats():
     return jsonify(stats)
 
 
+@app.route("/generate-cover-letter/<int:job_index>")
+def generate_cover_letter_route(job_index):
+    """Generate cover letter for a specific job"""
+    jobs = load_job_data()
+
+    if job_index >= len(jobs):
+        return jsonify({"error": "Job not found"}), 404
+
+    job = jobs[job_index]
+
+    # Call cover letter generator
+    import requests
+
+    response = requests.post(
+        "http://127.0.0.1:5000/generate-cover-letter",
+        json={
+            "job_title": job["title"],
+            "company": job["company"],
+            "job_description": job.get("description", ""),
+            "matching_skills": job["matching_skills"],
+            "missing_skills": job["missing_skills"],
+            "save": True,
+        },
+    )
+
+    if response.ok:
+        result = response.json()
+        return jsonify(result)
+    else:
+        return jsonify({"error": "Failed to generate"}), 500
+
+
 if __name__ == "__main__":
     app.run(debug=True, port=5001)
