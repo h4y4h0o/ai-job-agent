@@ -28,13 +28,14 @@ def detect_language(text):
     return "fr" if french_count > english_count else "en"
 
 
-def generate_cover_letter(job_data, cv_content=None, language=None):
+def generate_cover_letter(job_data, cv_content=None, language="fr"):
     """
-    Generate tailored cover letter for a specific job with auto language detection.
+    Generate tailored cover letter for a specific job.
 
     Args:
         job_data: dict with job_title, company, job_description, matching_skills, missing_skills
         cv_content: optional CV text (loads from file if not provided)
+        language: 'fr' for French or 'en' for English (default: 'fr')
 
     Returns:
         dict with cover_letter text and metadata
@@ -42,85 +43,108 @@ def generate_cover_letter(job_data, cv_content=None, language=None):
     if cv_content is None:
         cv_content = load_cv()
 
-    # Auto-detect language if not specified
-    if language is None:
-        job_desc = job_data.get("job_description", "")
-        language = detect_language(job_desc)
-        print(f"🌍 Langue détectée: {'Français' if language == 'fr' else 'English'}")
+    # Debug: Print what language was received
+    print(f"\n{'='*60}")
+    print(f"🔍 Language parameter received: '{language}' (type: {type(language)})")
+    print(f"{'='*60}\n")
 
-    prompt_en = f"""You are a professional career coach helping write an excellent cover letter.
+    # English prompt
+    prompt_en = f"""You are a professional career coach helping write an excellent cover letter IN ENGLISH.
 
-CANDIDATE CV:
-{cv_content}
+    CANDIDATE CV:
+    {cv_content}
 
-JOB POSTING:
-Position: {job_data['job_title']}
-Company: {job_data['company']}
-Description: {job_data.get('job_description', 'Not provided')}
+    JOB POSTING:
+    Position: {job_data['job_title']}
+    Company: {job_data['company']}
+    Description: {job_data.get('job_description', 'Not provided')}
 
-ANALYSIS:
-Matching Skills: {', '.join(job_data.get('matching_skills', []))}
-Skills to Highlight: {', '.join(job_data.get('missing_skills', [])[:3])}
+    ANALYSIS:
+    Matching Skills: {', '.join(job_data.get('matching_skills', []))}
+    Skills to Highlight: {', '.join(job_data.get('missing_skills', [])[:3])}
 
-Write a compelling, personalized cover letter that:
-1. Shows genuine interest in {job_data['company']} and this specific role
-2. Highlights the candidate's most relevant experience and skills
-3. Addresses how they can contribute despite any skill gaps
-4. Uses a professional but warm tone
-5. Is 250-350 words (3-4 paragraphs)
-6. Avoids clichés and generic statements
+    CRITICAL: Write this cover letter ONLY in ENGLISH. Do NOT use French.
 
-Structure:
-- Opening: Hook and why this role/company
-- Body: 2 key experiences/skills that make them a great fit
-- Closing: Enthusiasm and call to action
+    Write a compelling, personalized cover letter IN ENGLISH that:
+    1. Shows genuine interest in {job_data['company']} and this specific role
+    2. Highlights the candidate's most relevant experience and skills
+    3. Addresses how they can contribute despite any skill gaps
+    4. Uses a professional but warm tone
+    5. Is 250-350 words (3-4 paragraphs)
+    6. Avoids clichés and generic statements
 
-Return ONLY the cover letter text, no additional commentary."""
+    Structure:
+    - Opening: Hook and why this role/company
+    - Body: 2 key experiences/skills that make them a great fit
+    - Closing: Enthusiasm and call to action
 
+    REMINDER: Return ONLY the cover letter text IN ENGLISH, no additional commentary."""
+
+    # French prompt
     prompt_fr = f"""Tu es un conseiller en carrière professionnel aidant à rédiger une excellente lettre de motivation EN FRANÇAIS.
 
-CV DU CANDIDAT:
-{cv_content}
+    CV DU CANDIDAT:
+    {cv_content}
 
-OFFRE D'EMPLOI:
-Poste: {job_data['job_title']}
-Entreprise: {job_data['company']}
-Description: {job_data.get('job_description', 'Non fournie')}
+    OFFRE D'EMPLOI:
+    Poste: {job_data['job_title']}
+    Entreprise: {job_data['company']}
+    Description: {job_data.get('job_description', 'Non fournie')}
 
-ANALYSE:
-Compétences correspondantes: {', '.join(job_data.get('matching_skills', []))}
-Compétences à mettre en avant: {', '.join(job_data.get('missing_skills', [])[:3])}
+    ANALYSE:
+    Compétences correspondantes: {', '.join(job_data.get('matching_skills', []))}
+    Compétences à mettre en avant: {', '.join(job_data.get('missing_skills', [])[:3])}
 
-Rédige une lettre de motivation convaincante et personnalisée EN FRANÇAIS qui:
-1. Montre un intérêt sincère pour {job_data['company']} et ce poste spécifique
-2. Met en avant les expériences et compétences les plus pertinentes du candidat
-3. Explique comment il peut contribuer malgré les lacunes de compétences
-4. Utilise un ton professionnel mais chaleureux
-5. Fait 250-350 mots (3-4 paragraphes)
-6. Évite les clichés et déclarations génériques
+    CRITIQUE: Écris cette lettre UNIQUEMENT en FRANÇAIS. N'utilise PAS l'anglais.
 
-Structure:
-- Ouverture: Accroche et pourquoi ce rôle/cette entreprise
-- Corps: 2 expériences/compétences clés qui en font un excellent candidat
-- Clôture: Enthousiasme et appel à l'action
+    Rédige une lettre de motivation convaincante et personnalisée EN FRANÇAIS qui:
+    1. Montre un intérêt sincère pour {job_data['company']} et ce poste spécifique
+    2. Met en avant les expériences et compétences les plus pertinentes du candidat
+    3. Explique comment il peut contribuer malgré les lacunes de compétences
+    4. Utilise un ton professionnel mais chaleureux
+    5. Fait 250-350 mots (3-4 paragraphes)
+    6. Évite les clichés et déclarations génériques
 
-IMPORTANT: Retourne UNIQUEMENT le texte de la lettre de motivation EN FRANÇAIS, sans commentaire additionnel.
-La lettre doit commencer par "Madame, Monsieur," ou "À l'attention du service recrutement,"."""
+    Structure:
+    - Ouverture: Accroche et pourquoi ce rôle/cette entreprise
+    - Corps: 2 expériences/compétences clés qui en font un excellent candidat
+    - Clôture: Enthousiasme et appel à l'action
 
-    if language.lower() == "fr":
-        prompt = prompt_fr
-    else:
+    RAPPEL: Retourne UNIQUEMENT le texte de la lettre de motivation EN FRANÇAIS, sans commentaire additionnel.
+    La lettre doit commencer par "Madame, Monsieur," ou "À l'attention du service recrutement,"."""
+
+    # Select prompt based on language
+    if language and str(language).lower() == "en":
         prompt = prompt_en
+        print("✅ Selected ENGLISH prompt")
+    else:
+        prompt = prompt_fr
+        print("✅ Selected FRENCH prompt")
 
     try:
         response = client.chat.completions.create(
             model="llama-3.3-70b-versatile",
             messages=[{"role": "user", "content": prompt}],
-            temperature=0.7,  # More creative for writing
-            max_tokens=800,
+            temperature=0.7,
+            max_tokens=1000,
         )
 
         cover_letter_text = response.choices[0].message.content.strip()
+
+        # Detect actual language of generated text
+        first_words = cover_letter_text[:100].lower()
+        is_french = any(
+            word in first_words
+            for word in ["madame", "monsieur", "votre", "entreprise"]
+        )
+        is_english = any(
+            word in first_words for word in ["dear", "hiring", "manager", "position"]
+        )
+
+        actual_language = "fr" if is_french else ("en" if is_english else language)
+
+        print(f"📝 Generated {len(cover_letter_text)} characters")
+        print(f"🌍 Requested: {language}, Detected in output: {actual_language}")
 
         return {
             "cover_letter": cover_letter_text,
@@ -128,11 +152,11 @@ La lettre doit commencer par "Madame, Monsieur," ou "À l'attention du service r
             "job_title": job_data["job_title"],
             "company": job_data["company"],
             "word_count": len(cover_letter_text.split()),
-            "language": language,
+            "language": actual_language,
         }
 
     except Exception as e:
-        print(f"Error generating cover letter: {e}")
+        print(f" Error generating cover letter: {e}")
         return None
 
 

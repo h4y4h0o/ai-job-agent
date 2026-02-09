@@ -15,6 +15,7 @@ An intelligent job search assistant that uses AI to analyze job postings and mat
 - 📊 Scoring system (0-100) for job-candidate matching and filters results to show only relevant opportunities (≥65% match)
 - 🎯 Identifies matching and missing skills
 - 💡 Provides personalized application recommendations
+- 📝 Generate cover letter for the recommended jobs
 - 📧 Emails you daily with top matches and detailed recommendations
 - 📈 Displays results in a beautiful web dashboard with statistics
 - 🔄 RESTful API for easy integration

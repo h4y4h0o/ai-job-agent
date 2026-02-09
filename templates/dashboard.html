@@ -465,7 +465,7 @@
                             </div>
                             <div class="job-company">{{ job.company|replace('=', '') }}</div>
                         </div>
-                        <div class="score-badge {% if job.overall_score >= 80 %}score-high{% elif job.overall_score >= 70 %}score-medium{% else %}score-low{% endif %}">
+                        <div class="score-badge {% if job.overall_score >= 75 %}score-high{% elif job.overall_score >= 65 %}score-medium{% else %}score-low{% endif %}">
                             {{ job.overall_score }}%
                         </div>
                     </div>
@@ -473,19 +473,19 @@
                     <div class="score-breakdown">
                         <div class="breakdown-item">
                             <div class="breakdown-label">Skills</div>
-                            <div class="breakdown-value">{{ job.skills_match_score }}%</div>
+                            <div class="breakdown-value">{{ ((job.skills_match_score / 40) * 100)|round|int}}%</div>
                         </div>
                         <div class="breakdown-item">
                             <div class="breakdown-label">Experience</div>
-                            <div class="breakdown-value">{{ job.experience_score }}%</div>
+                            <div class="breakdown-value">{{ ((job.experience_score / 30) * 100)|round|int }}%</div>
                         </div>
                         <div class="breakdown-item">
                             <div class="breakdown-label">Domain</div>
-                            <div class="breakdown-value">{{ job.domain_score }}%</div>
+                            <div class="breakdown-value">{{ ((job.domain_score / 20) * 100)|round|int }}%</div>
                         </div>
                         <div class="breakdown-item">
                             <div class="breakdown-label">Other</div>
-                            <div class="breakdown-value">{{ job.other_score }}%</div>
+                            <div class="breakdown-value">{{ ((job.other_score / 10) * 100)|round|int }}%</div>
                         </div>
                     </div>
 

@@ -1,0 +1,15 @@
+Cover Letter for =Data Scientist / Analyse Senior (H/F) - CDI - Paris at =Quadratic
+Generated: 2026-02-01T22:28:35.145257
+Word Count: 363
+
+================================================================================
+
+Madame, Monsieur,
+
+Je me permets de vous adresser ma candidature pour le poste de Data Scientist / Analyse Senior au sein de l'entreprise Quadratic, à Paris. En tant que data scientist passionnée par l'analyse de données et le développement de modèles prédictifs, je suis particulièrement attirée par la mission de Quadratic et les défis que ce poste présente. Avec une expérience solide dans l'analyse de données et le développement de modèles prédictifs, je suis convaincue que mes compétences et mon enthousiasme pourraient être un excellent atout pour votre équipe.
+
+Au cours de ma carrière, j'ai développé une solide expertise dans l'analyse de données et la mise en place de modèles prédictifs. En tant que Data Scientist/Analyst Freelance, j'ai eu l'occasion de travailler sur divers projets, notamment la conception et l'optimisation de requêtes SQL pour extraire, transformer et analyser des données. J'ai également utilisé des bibliothèques Python telles que Pandas et NumPy pour effectuer des analyses exploratoires de données et j'ai développé des visualisations de données impactantes avec Matplotlib et Seaborn. Ces expériences m'ont permis de développer une approche rigoureuse et efficace pour résoudre des problèmes complexes et de communiquer des insights clés aux parties prenantes.
+
+Je suis également convaincue que mon expérience en tant que Research & Developement Engineer chez Capgemini engineering et Research Engineer chez Coheris m'a permis de développer des compétences complémentaires qui pourraient être utiles dans ce poste. Bien que je n'aie pas d'expérience directe avec des outils tels qu'AWS ou Kubernetes, je suis enthousiaste à l'idée de me former et de mettre en pratique ces compétences pour contribuer à l'équipe. Je suis convaincue que mon désir d'apprendre, ma capacité à travailler en équipe et mon enthousiasme pour l'analyse de données pourraient me permettre de contribuer de manière significative à Quadratic.
+
+Je suis impatiente de discuter de ma candidature et de la manière dont je pourrais contribuer à l'équipe de Quadratic. Je vous remercie de l'attention que vous porterez à ma candidature et je suis à votre disposition pour un entretien. Je suis convaincue que mon expérience, mes compétences et mon enthousiasme pourraient faire de moi un excellent candidat pour ce poste et je suis impatiente de rejoindre votre équipe.

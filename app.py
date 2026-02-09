@@ -1,12 +1,16 @@
 # Import statements - these load the tools we need
 from flask import Flask, request, jsonify
 from langchain_anthropic import ChatAnthropic
+from langchain_groq import ChatGroq  # Changed from langchain_anthropic
 
 # from langchain.prompts import PromptTemplate
 from langchain_core.prompts import ChatPromptTemplate
 import os
 from dotenv import load_dotenv
 import json
+import hashlib
+
+from cover_letter_generator import generate_cover_letter, save_cover_letter
 
 # Flask: Creates web server
 # request, jsonify: Handle incoming data and send JSON responses
@@ -16,6 +20,8 @@ import json
 # load_dotenv: Load keys from .env file
 # json: Work with JSON data
 
+CACHE = {}
+
 # Load environment variables from .env file
 load_dotenv()
 
@@ -23,9 +29,16 @@ load_dotenv()
 app = Flask(__name__)
 
 # Initialize Claude
-llm = ChatAnthropic(
-    model="claude-sonnet-4-20250514",  # Which Claude model to use
-    anthropic_api_key=os.getenv("ANTHROPIC_API_KEY"),  # Your API key
+# llm = ChatAnthropic(
+#    model="claude-sonnet-4-20250514",  # Which Claude model to use
+#    anthropic_api_key=os.getenv("ANTHROPIC_API_KEY"),  # Your API key
+#    temperature=0,  # 0 = consistent, 1 = creative
+# )
+
+# Initialize Groq
+llm = ChatGroq(
+    model="llama-3.3-70b-versatile",  # Which Groq model to use
+    groq_api_key=os.getenv("GROQ_API_KEY"),  # Your API key
     temperature=0,  # 0 = consistent, 1 = creative
 )
 
@@ -121,6 +134,16 @@ def analyze_fit():
         # Get the data sent to us
         data = request.json
 
+        # Create cache key (to prevent re-analyzing the same job twice)
+        cache_key = hashlib.md5(
+            f"{data['job_title']}{data['company']}".encode()
+        ).hexdigest()
+
+        # Check cache
+        if cache_key in CACHE:
+            print(f"✅ Using cached analysis for {data['job_title']}")
+            return jsonify(CACHE[cache_key])
+
         # Check if required fields are present
         required_fields = ["job_title", "company", "job_description"]
         for field in required_fields:
@@ -164,6 +187,9 @@ def analyze_fit():
         }
 
         print(f"✅ Score: {analysis['overall_score']}/100")
+
+        # Cache the result
+        CACHE[cache_key] = analysis
 
         # Send back the analysis
         return jsonify(analysis)
@@ -247,6 +273,34 @@ def save_results():
     except Exception as e:
         print(f"❌ Error saving results: {e}")
         return jsonify({"status": "error", "message": str(e)}), 500
+
+
+# cover letter generation endpoint
+@app.route("/generate-cover-letter", methods=["POST"])
+def api_generate_cover_letter():
+    """Generate cover letter for a job (French or English)"""
+    try:
+        data = request.json
+
+        # Get language preference (default to French)
+        language = data.get("language", "fr")
+
+        # Generate cover letter
+        result = generate_cover_letter(data, language=language)
+
+        if result:
+            # Optionally save to file
+            if data.get("save", False):
+                filepath = save_cover_letter(result)
+                result["filepath"] = filepath
+
+            return jsonify(result)
+        else:
+            return jsonify({"error": "Échec de la génération"}), 500
+
+    except Exception as e:
+        print(f"Erreur: {e}")
+        return jsonify({"error": str(e)}), 500
 
 
 # Start the server

@@ -3,76 +3,134 @@
     "json": {
       "data": [
         {
-          "title": "=Junior Data Analyst",
-          "company": "=Information Tech Consultants",
+          "title": "=Data Scientist - Data Analyst H/F",
+          "company": "=Consort Group",
           "location": null,
           "url": null,
-          "overall_score": 78,
+          "overall_score": 82,
           "priority": "High",
-          "should_apply": true,
-          "matching_skills": [
-            "Python (Intermediate)",
-            "SQL (Intermediate)",
-            "Data pipeline experience",
-            "Pandas",
-            "NumPy",
-            "Data analysis",
-            "EDA",
-            "Statistical modeling",
-            "Git & GitHub"
-          ],
-          "missing_skills": [
-            "Big Data platforms (Hadoop, Spark)",
-            "Data engineering focus",
-            "ETL processes",
-            "Cloud platforms",
-            "Data quality frameworks",
-            "Streaming data processing"
-          ],
-          "recommendation": "Very good candidate with strong foundational skills. Your Python and SQL proficiency, combined with data analysis experience, align well with the role. However, you may need to emphasize your data pipeline work from Capgemini and highlight transferable skills from your research background. The PhD might be overqualified for a junior role, but your practical experience balances this well.",
-          "skills_match_score": 32,
-          "experience_score": 22,
-          "domain_score": 16,
-          "other_score": 8,
-          "analyzed_at": "2026-01-30T10:10:16.956Z"
-        },
-        {
-          "title": "=Data Analytics Consultant",
-          "company": "=Westfield Insurance",
-          "location": null,
-          "url": null,
-          "overall_score": 72,
-          "priority": "Medium",
           "should_apply": true,
           "matching_skills": [
             "Python",
             "SQL",
-            "Data Analytics",
-            "Statistical Modeling",
-            "Pandas",
-            "NumPy",
-            "Data Visualization",
             "Machine Learning",
-            "Scikit-learn",
-            "EDA",
-            "Data Pipeline Development"
+            "Data Analysis",
+            "Data Visualization"
           ],
           "missing_skills": [
-            "Data Engineering Architecture",
-            "Cloud Platforms (AWS/Azure/GCP)",
-            "Big Data Technologies",
-            "ETL Tools",
-            "Data Warehousing",
-            "Spark/Hadoop",
-            "Advanced SQL/Database Design",
-            "Agile Methodology Experience"
+            "Specific tools like AWS, Azure, or Google Cloud",
+            "Deep learning frameworks"
           ],
-          "recommendation": "Good fit worth applying. Your strong analytical background, PhD in AI, and hands-on data science experience align well with the analytics aspects. However, this role emphasizes data engineering and architecture which requires skills you're still developing. Your freelance experience and current AI projects show adaptability. The consulting nature matches your diverse project experience.",
-          "skills_match_score": 28,
+          "recommendation": "Strong candidate. Your experience in data science, machine learning, and SQL aligns well with the job requirements. Although the job location is not specified, your location in the Paris area could be a plus if the company has operations there. Your background and skills make you a competitive candidate.",
+          "skills_match_score": 36,
+          "experience_score": 24,
+          "domain_score": 12,
+          "other_score": 10,
+          "analyzed_at": "2026-02-01T21:34:39.901Z"
+        },
+        {
+          "title": "=Consultant(e) DataOps",
+          "company": "=SOFTEAM",
+          "location": null,
+          "url": null,
+          "overall_score": 82,
+          "priority": "High",
+          "should_apply": true,
+          "matching_skills": [
+            "Python",
+            "Machine Learning",
+            "SQL",
+            "Data Analysis"
+          ],
+          "missing_skills": [
+            "Specific DataOps tools",
+            "Cloud platforms"
+          ],
+          "recommendation": "Strong candidate. Your data science background and experience in machine learning, Python, and SQL align well with the DataOps consultant role. Although specific DataOps tools and cloud platforms are not mentioned in your CV, your ability to learn and adapt could be an asset.",
+          "skills_match_score": 32,
+          "experience_score": 24,
+          "domain_score": 16,
+          "other_score": 10,
+          "analyzed_at": "2026-02-01T21:34:39.926Z"
+        },
+        {
+          "title": "=Senior Data Engineer - n H/F",
+          "company": "=Believe",
+          "location": null,
+          "url": null,
+          "overall_score": 82,
+          "priority": "High",
+          "should_apply": true,
+          "matching_skills": [
+            "Python",
+            "SQL",
+            "Machine Learning",
+            "Data Engineering"
+          ],
+          "missing_skills": [
+            "AWS",
+            "Snowflake",
+            "Scalability and performance optimization"
+          ],
+          "recommendation": "Strong candidate with relevant experience in data science and engineering. However, lacking specific experience with AWS and Snowflake. Still, worth applying due to transferable skills and strong educational background.",
+          "skills_match_score": 32,
+          "experience_score": 24,
+          "domain_score": 15,
+          "other_score": 11,
+          "analyzed_at": "2026-02-01T21:34:39.937Z"
+        },
+        {
+          "title": "=Data Scientist / Analyse Senior (H/F) - CDI - Paris",
+          "company": "=Quadratic",
+          "location": null,
+          "url": null,
+          "overall_score": 82,
+          "priority": "High",
+          "should_apply": true,
+          "matching_skills": [
+            "Python",
+            "Machine Learning",
+            "SQL",
+            "Data Analysis",
+            "Data Visualization"
+          ],
+          "missing_skills": [
+            "Specific tools like AWS, Kubernetes, or cloud platforms"
+          ],
+          "recommendation": "You have a strong background in data science and machine learning, which aligns well with the job requirements. Your experience in data analysis, visualization, and modeling is also a good fit. Although you may not have direct experience in all the specific technologies mentioned, your skills in Python, SQL, and machine learning provide a solid foundation.",
+          "skills_match_score": 36,
+          "experience_score": 24,
+          "domain_score": 12,
+          "other_score": 10,
+          "analyzed_at": "2026-02-01T21:34:39.947Z"
+        },
+        {
+          "title": "=Product Manager Data & IA (F/H)",
+          "company": "=WeFiiT",
+          "location": null,
+          "url": null,
+          "overall_score": 80,
+          "priority": "Medium",
+          "should_apply": true,
+          "matching_skills": [
+            "Python",
+            "Machine Learning",
+            "SQL",
+            "Data Analysis",
+            "Data Visualization"
+          ],
+          "missing_skills": [
+            "Product Management",
+            "Strategy",
+            "Discovery",
+            "Delivery"
+          ],
+          "recommendation": "Strong technical background, but lacks direct product management experience. Still, a good fit due to data science and analysis skills, which can be valuable in a data product manager role.",
+          "skills_match_score": 32,
           "experience_score": 22,
           "domain_score": 15,
-          "other_score": 7,
-          "analyzed_at": "2026-01-30T10:10:36.397Z"
+          "other_score": 11,
+          "analyzed_at": "2026-02-01T21:34:39.958Z"
         }
       ]
     },

@@ -1,0 +1,16 @@
+Cover Letter for =Consultant(e) DataOps at =SOFTEAM
+Generated: 2026-02-01T22:31:47.102811
+Word Count: 306
+
+================================================================================
+
+Madame, Monsieur,
+
+Je me permets de vous adresser ma candidature pour le poste de Consultant(e) DataOps au sein de SOFTEAM, entreprise réputée pour son expertise dans le domaine des technologies de l'information. Ce rôle m'intéresse particulièrement en raison de l'opportunité de mettre en pratique mes compétences en analyse de données, en machine learning et en gestion de projets pour contribuer à la mise en place de solutions DataOps efficaces.
+
+Avec plus de 5 ans d'expérience dans le domaine de la science des données, j'ai développé une solide expertise en analyse de données et en machine learning, notamment grâce à mon expérience en tant que Data Scientist/Analyst Freelance où j'ai travaillé sur des projets de développement et d'optimisation de requêtes SQL, d'exploratory data analysis (EDA) et de création de visualisations de données avec des outils tels que Matplotlib et Seaborn. De plus, mon expérience en tant que Research & Developement Engineer chez Capgemini engineering m'a permis de développer des compétences en ingénierie de données et en intelligence artificielle, notamment dans le domaine de la vision par ordinateur.
+
+Je suis convaincu que mes compétences et expériences me permettent de contribuer à la réussite de vos projets DataOps, même si je n'ai pas toutes les compétences spécifiques requises. Je suis un apprenant rapide et je suis prêt à me former sur les outils et les technologies spécifiques à SOFTEAM. Je suis également convaincu que mon expérience dans la gestion de projets et mon esprit d'équipe seront des atouts pour votre équipe.
+
+Je suis très enthousiaste à l'idée de rejoindre l'équipe de SOFTEAM et de contribuer à la mise en place de solutions DataOps innovantes. Je vous remercie de l'attention que vous porterez à ma candidature et je suis impatient de discuter de ce poste plus en détail. Je joins à ma candidature mon CV détaillé. Cordialement,
+Zahra Vahidi Ferdousi
