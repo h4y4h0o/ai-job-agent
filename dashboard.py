@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 import json
 import os
 from datetime import datetime
@@ -61,19 +61,28 @@ def calculate_statistics(jobs):
         return {
             "total_jobs": 0,
             "avg_score": 0,
-            "high_matches": 0,
-            "medium_matches": 0,
-            "low_matches": 0,
+            "high_priority": 0,
+            "medium_priority": 0,
+            "low_priority": 0,
+            "avg_skills_match": 0,
         }
 
     scores = [job.get("overall_score", 0) for job in jobs if "overall_score" in job]
 
+    # Extract skills match scores (these are out of 40)
+    skills_scores = [job.get("skills_match_score", 0) for job in jobs]
+    avg_skills_raw = sum(skills_scores) / len(skills_scores) if skills_scores else 0
+
+    # Convert to percentage (out of 40 → out of 100)
+    avg_skills_percent = (avg_skills_raw / 40) * 100  # ← ADD THIS
+
     return {
         "total_jobs": len(jobs),
         "avg_score": round(sum(scores) / len(scores), 1) if scores else 0,
-        "high_matches": len([s for s in scores if s >= 75]),
-        "medium_matches": len([s for s in scores if 65 <= s < 75]),
-        "low_matches": len([s for s in scores if s < 65]),
+        "high_priority": len([s for s in scores if s >= 75]),
+        "medium_priority": len([s for s in scores if 65 <= s < 75]),
+        "low_priority": len([s for s in scores if s < 65]),
+        "avg_skills_match": round(avg_skills_percent, 1),  # ← CHANGED
     }
 
 
@@ -88,12 +97,45 @@ def extract_skills(jobs):
     return skill_counts.most_common(10)
 
 
+def get_top_missing_skills(jobs, top_n=10):
+    """
+    Get the most commonly missing skills across all jobs
+
+    Args:
+        jobs: List of job dictionaries
+        top_n: Number of top skills to return
+
+    Returns:
+        List of tuples: [(skill_name, count), ...]
+    """
+    from collections import Counter
+
+    if not jobs:
+        return []
+
+    # Count all missing skills across all jobs
+    all_missing = []
+    for job in jobs:
+        missing = job.get("missing_skills", [])
+        if missing:
+            all_missing.extend(missing)
+
+    # Count frequency
+    skill_counts = Counter(all_missing)
+
+    # Get top N most common
+    top_skills = skill_counts.most_common(top_n)
+
+    return top_skills
+
+
 @app.route("/")
 def index():
     """Main dashboard page"""
     jobs = load_job_data()
     stats = calculate_statistics(jobs)
     top_skills = extract_skills(jobs)
+    top_missing = get_top_missing_skills(jobs)
 
     # Sort jobs by fit score (highest first)
     jobs_sorted = sorted(jobs, key=lambda x: x.get("overall_score", 0), reverse=True)
@@ -103,6 +145,7 @@ def index():
         jobs=jobs_sorted,
         stats=stats,
         top_skills=top_skills,
+        top_missing=top_missing,
         last_updated=datetime.now().strftime("%Y-%m-%d %H:%M"),
     )
 
@@ -132,6 +175,9 @@ def generate_cover_letter_route(job_index):
 
     job = jobs[job_index]
 
+    # Get language from query parameter (default to French)
+    language = request.args.get("language", "fr")
+
     # Call cover letter generator
     import requests
 
@@ -143,6 +189,7 @@ def generate_cover_letter_route(job_index):
             "job_description": job.get("description", ""),
             "matching_skills": job["matching_skills"],
             "missing_skills": job["missing_skills"],
+            "language": language,
             "save": True,
         },
     )
