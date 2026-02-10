@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Job Agent Dashboard</title>
     <style>
+        /* Reset & Base */
         * {
             margin: 0;
             padding: 0;
@@ -12,10 +13,12 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8f9fa;
             min-height: 100vh;
-            padding: 20px;
+            padding: 32px;
+            color: #1a1a2e;
+            line-height: 1.6;
         }
 
         .container {
@@ -23,148 +26,174 @@
             margin: 0 auto;
         }
 
+        /* Header */
         .header {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
+            padding: 24px 0 32px;
+            margin-bottom: 32px;
+            border-bottom: 1px solid #e5e7eb;
         }
 
         .header h1 {
-            color: #2d3748;
-            font-size: 2.5em;
-            margin-bottom: 10px;
+            color: #1a1a2e;
+            font-size: 1.75em;
+            font-weight: 600;
+            margin-bottom: 4px;
         }
 
+        .header p {
+            color: #6b7280;
+            font-size: 0.875em;
+        }
+
+        /* Stats Grid */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
         }
 
         .stat-card {
             background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
             text-align: center;
+            transition: box-shadow 0.2s ease;
+        }
+
+        .stat-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
 
         .stat-value {
-            font-size: 3em;
-            font-weight: bold;
-            margin-bottom: 10px;
+            font-size: 2.25em;
+            font-weight: 700;
+            margin-bottom: 4px;
         }
 
         .stat-label {
-            color: #718096;
-            font-size: 0.9em;
+            color: #6b7280;
+            font-size: 0.75em;
             text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 500;
         }
 
-        .stat-card.total .stat-value { color: #667eea; }
-        .stat-card.average .stat-value { color: #48bb78; }
-        .stat-card.high .stat-value { color: #f56565; }
-        .stat-card.medium .stat-value { color: #ed8936; }
+        .stat-card.total .stat-value { color: #3b82f6; }
+        .stat-card.average .stat-value { color: #10b981; }
+        .stat-card.high .stat-value { color: #ef4444; }
+        .stat-card.medium .stat-value { color: #f59e0b; }
 
+        /* Content Grid */
         .content-grid {
             display: grid;
             grid-template-columns: 2fr 1fr;
-            gap: 30px;
+            gap: 24px;
         }
 
+        /* Jobs Section */
         .jobs-section {
             background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 28px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
         }
 
         .section-title {
-            font-size: 1.8em;
-            color: #2d3748;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 3px solid #667eea;
+            font-size: 1.25em;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e5e7eb;
         }
 
+        /* Job Cards */
         .job-card {
-            background: #f7fafc;
-            border-left: 5px solid #667eea;
-            padding: 25px;
-            margin-bottom: 20px;
-            border-radius: 10px;
-            transition: transform 0.2s;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-left: 3px solid #3b82f6;
+            padding: 24px;
+            margin-bottom: 16px;
+            border-radius: 12px;
+            transition: box-shadow 0.2s ease;
         }
 
         .job-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
         }
 
         .job-card.high-priority {
-            border-left-color: #f56565;
-            background: #fff5f5;
+            border-left-color: #ef4444;
         }
 
         .job-card.medium-priority {
-            border-left-color: #ed8936;
-            background: #fffaf0;
+            border-left-color: #f59e0b;
         }
 
         .job-header {
             display: flex;
             justify-content: space-between;
             align-items: start;
-            margin-bottom: 15px;
+            margin-bottom: 16px;
         }
 
         .job-title {
-            font-size: 1.4em;
-            color: #2d3748;
-            font-weight: bold;
-            margin-bottom: 5px;
+            font-size: 1.125em;
+            color: #1a1a2e;
+            font-weight: 600;
+            margin-bottom: 4px;
         }
 
         .job-company {
-            color: #718096;
-            font-size: 1.1em;
+            color: #6b7280;
+            font-size: 0.95em;
         }
 
+        /* Score Badge */
         .score-badge {
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-weight: bold;
-            font-size: 1.2em;
-            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.95em;
         }
 
-        .score-high { background: #48bb78; }
-        .score-medium { background: #ed8936; }
-        .score-low { background: #f56565; }
+        .score-high {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .score-medium {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .score-low {
+            background: #fee2e2;
+            color: #991b1b;
+        }
 
+        /* Priority Badge */
         .priority-badge {
             display: inline-block;
-            padding: 5px 12px;
-            border-radius: 15px;
-            font-size: 0.85em;
-            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: 500;
             margin-left: 10px;
         }
 
-        .priority-high { background: #fed7d7; color: #c53030; }
-        .priority-medium { background: #feebc8; color: #c05621; }
-        .priority-low { background: #c6f6d5; color: #22543d; }
+        .priority-high { background: #fee2e2; color: #991b1b; }
+        .priority-medium { background: #fef3c7; color: #92400e; }
+        .priority-low { background: #d1fae5; color: #065f46; }
 
+        /* Score Breakdown */
         .score-breakdown {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin: 15px 0;
-            padding: 15px;
-            background: white;
+            gap: 12px;
+            margin: 16px 0;
+            padding: 16px;
+            background: #f8f9fa;
             border-radius: 8px;
         }
 
@@ -173,24 +202,28 @@
         }
 
         .breakdown-label {
-            font-size: 0.75em;
-            color: #718096;
-            margin-bottom: 5px;
+            font-size: 0.7em;
+            color: #6b7280;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
         }
 
         .breakdown-value {
-            font-size: 1.3em;
-            font-weight: bold;
-            color: #2d3748;
+            font-size: 1.125em;
+            font-weight: 600;
+            color: #1a1a2e;
         }
 
+        /* Skills Section */
         .skills-section {
-            margin: 15px 0;
+            margin: 16px 0;
         }
 
         .skills-label {
-            font-weight: bold;
-            color: #2d3748;
+            font-weight: 500;
+            font-size: 0.875em;
+            color: #1a1a2e;
             margin-bottom: 8px;
             display: flex;
             align-items: center;
@@ -199,53 +232,56 @@
         .skills-label::before {
             content: '';
             display: inline-block;
-            width: 8px;
-            height: 8px;
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
             margin-right: 8px;
         }
 
-        .matching-skills .skills-label::before { background: #48bb78; }
-        .missing-skills .skills-label::before { background: #f56565; }
+        .matching-skills .skills-label::before { background: #10b981; }
+        .missing-skills .skills-label::before { background: #ef4444; }
 
+        /* Skill Tags */
         .skill-tag {
             display: inline-block;
-            padding: 6px 12px;
-            margin: 4px;
-            border-radius: 15px;
-            font-size: 0.85em;
+            padding: 4px 10px;
+            margin: 3px;
+            border-radius: 6px;
+            font-size: 0.75em;
+            font-weight: 500;
         }
 
         .skill-match {
-            background: #c6f6d5;
-            color: #22543d;
+            background: #ecfdf5;
+            color: #065f46;
         }
 
         .skill-missing {
-            background: #fed7d7;
-            color: #c53030;
+            background: #fef2f2;
+            color: #991b1b;
         }
 
+        /* Recommendation */
         .recommendation {
-            margin-top: 15px;
-            padding: 15px;
-            background: #edf2f7;
+            margin-top: 16px;
+            padding: 16px;
+            background: #f8f9fa;
             border-radius: 8px;
-            font-size: 0.95em;
-            line-height: 1.6;
-            color: #4a5568;
+            font-size: 0.875em;
+            line-height: 1.7;
+            color: #4b5563;
         }
 
         .recommendation::before {
-            content: '💡 ';
-            font-size: 1.2em;
+            content: '';
         }
 
+        /* Sidebar */
         .sidebar-card {
             background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
         }
 
         .skill-demand-item {
@@ -253,71 +289,91 @@
             justify-content: space-between;
             align-items: center;
             padding: 12px;
-            margin-bottom: 10px;
-            background: #f7fafc;
+            margin-bottom: 8px;
+            background: #f8f9fa;
             border-radius: 8px;
+            transition: background 0.2s ease;
+        }
+
+        .skill-demand-item:hover {
+            background: #f1f5f9;
         }
 
         .skill-name {
             font-weight: 500;
-            color: #2d3748;
+            font-size: 0.875em;
+            color: #1a1a2e;
         }
 
         .skill-count {
-            background: #667eea;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 0.9em;
-            font-weight: bold;
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 4px 10px;
+            border-radius: 10px;
+            font-size: 0.75em;
+            font-weight: 600;
         }
 
+        /* Empty State */
         .empty-state {
             text-align: center;
             padding: 60px 20px;
-            color: #718096;
+            color: #6b7280;
         }
 
         .empty-state-icon {
-            font-size: 4em;
-            margin-bottom: 20px;
+            font-size: 3em;
+            margin-bottom: 16px;
+            opacity: 0.5;
         }
 
+        .empty-state h2 {
+            font-size: 1.25em;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 8px;
+        }
+
+        /* Responsive */
         @media (max-width: 1024px) {
             .content-grid {
                 grid-template-columns: 1fr;
             }
+            body {
+                padding: 16px;
+            }
         }
-        /* Cover Letter Button Styles */
+
+        /* Cover Letter Buttons */
         .cover-letter-btn {
             color: white;
-            padding: 12px 24px;
+            padding: 10px 20px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            font-weight: bold;
-            font-size: 0.95em;
-            transition: transform 0.2s, box-shadow 0.2s;
-            min-width: 180px;
+            font-weight: 500;
+            font-size: 0.875em;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            min-width: 160px;
         }
 
         .cover-letter-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            opacity: 0.9;
+            transform: translateY(-1px);
         }
 
         .cover-letter-btn:disabled {
-            opacity: 0.6;
+            opacity: 0.5;
             cursor: not-allowed;
             transform: none;
         }
 
         .cover-letter-btn-fr {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #3b82f6;
         }
 
         .cover-letter-btn-en {
-            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            background: #10b981;
         }
 
         /* Modal Styles */
@@ -327,12 +383,12 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.4);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 1000;
-            animation: fadeIn 0.3s;
+            animation: fadeIn 0.2s ease;
         }
 
         @keyframes fadeIn {
@@ -342,18 +398,18 @@
 
         .modal-content {
             background: white;
-            padding: 40px;
-            border-radius: 15px;
-            max-width: 800px;
-            max-height: 80vh;
+            padding: 32px;
+            border-radius: 12px;
+            max-width: 720px;
+            max-height: 85vh;
             overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            animation: slideUp 0.3s;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            animation: modalSlide 0.2s ease;
         }
 
-        @keyframes slideUp {
+        @keyframes modalSlide {
             from {
-                transform: translateY(50px);
+                transform: translateY(20px);
                 opacity: 0;
             }
             to {
@@ -364,64 +420,74 @@
 
         .modal-header {
             margin-top: 0;
-            color: #2d3748;
-            font-size: 1.8em;
+            color: #1a1a2e;
+            font-size: 1.5em;
+            font-weight: 600;
         }
 
         .modal-meta {
-            color: #718096;
+            color: #6b7280;
             margin-bottom: 20px;
-            font-size: 0.95em;
+            font-size: 0.875em;
         }
 
         .modal-body {
             white-space: pre-wrap;
             line-height: 1.8;
-            font-family: Georgia, serif;
-            color: #2d3748;
+            font-family: Georgia, 'Times New Roman', serif;
+            color: #1a1a2e;
             margin: 20px 0;
+            font-size: 0.95em;
         }
 
         .modal-actions {
-            margin-top: 30px;
+            margin-top: 24px;
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
         }
 
         .modal-btn {
-            padding: 12px 24px;
+            padding: 10px 20px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            font-weight: bold;
-            font-size: 0.95em;
-            transition: all 0.2s;
+            font-weight: 500;
+            font-size: 0.875em;
+            transition: opacity 0.2s ease;
+        }
+
+        .modal-btn:hover {
+            opacity: 0.85;
         }
 
         .modal-btn-copy {
-            background: #48bb78;
+            background: #10b981;
             color: white;
         }
 
-        .modal-btn-copy:hover {
-            background: #38a169;
-        }
-
         .modal-btn-close {
-            background: #cbd5e0;
-            color: #2d3748;
+            background: #e5e7eb;
+            color: #1a1a2e;
         }
 
-        .modal-btn-close:hover {
-            background: #a0aec0;
+        /* Apply Recommendation Box */
+        .apply-recommendation {
+            margin-top: 16px;
+            padding: 12px 16px;
+            background: #ecfdf5;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+            font-size: 0.875em;
+            color: #065f46;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>🤖 AI Job Agent Dashboard</h1>
+            <h1>AI Job Agent Dashboard</h1>
             <p>Last updated: {{ last_updated }}</p>
         </div>
 
@@ -518,12 +584,12 @@
                     </div>
 
                     {% if job.should_apply %}
-                    <div style="margin-top: 15px; padding: 10px; background: #c6f6d5; border-radius: 8px; text-align: center; font-weight: bold; color: #22543d;">
-                        ✓ Recommended: Apply to this position
+                    <div class="apply-recommendation">
+                        Recommended: Apply to this position
                     </div>
                     {% endif %}
                     <!-- Cover Letter Buttons -->
-                    <div style="margin-top: 15px; text-align: center; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                    <div style="margin-top: 16px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
                         <button onclick="generateCoverLetter({{ loop.index0 }}, 'fr')" class="cover-letter-btn cover-letter-btn-fr">
                             📝 Lettre en Français
                         </button>
@@ -537,8 +603,8 @@
 
             <div class="sidebar">
                 <div class="sidebar-card">
-                    <h3 class="section-title">📊 Most In-Demand Skills</h3>
-                    <p style="color: #718096; margin-bottom: 20px; font-size: 0.9em;">
+                    <h3 class="section-title">Most In-Demand Skills</h3>
+                    <p style="color: #6b7280; margin-bottom: 16px; font-size: 0.875em;">
                         Skills you should prioritize learning
                     </p>
                     {% for skill, count in top_missing %}
@@ -595,39 +661,36 @@ function generateCoverLetter(jobIndex, language) {
 function showCoverLetterModal(data, language) {
     const modal = document.createElement('div');
     modal.className = 'modal-overlay';
-    modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1000;';
-    
+
     const languageLabel = language === 'fr' ? 'Français' : 'English';
-    const copyLabel = language === 'fr' ? '📋 Copier' : '📋 Copy';
+    const copyLabel = language === 'fr' ? 'Copier' : 'Copy';
     const closeLabel = language === 'fr' ? 'Fermer' : 'Close';
-    
+
     const coverLetter = data.cover_letter.replace(/\n/g, '<br>');
-    
+
     modal.innerHTML = `
-        <div style="background: white; padding: 40px; border-radius: 15px; max-width: 800px; max-height: 80vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
-            <h2 style="margin-top: 0; color: #2d3748; font-size: 1.8em;">📝 ${language === 'fr' ? 'Lettre de Motivation' : 'Cover Letter'}</h2>
-            <p style="color: #718096; margin-bottom: 20px; font-size: 0.95em;">
+        <div class="modal-content">
+            <h2 class="modal-header">${language === 'fr' ? 'Lettre de Motivation' : 'Cover Letter'}</h2>
+            <p class="modal-meta">
                 <strong>${data.job_title}</strong> at <strong>${data.company}</strong><br>
                 ${data.word_count} ${language === 'fr' ? 'mots' : 'words'} | ${languageLabel}
             </p>
-            <div style="white-space: pre-wrap; line-height: 1.8; font-family: Georgia, serif; color: #2d3748; margin: 20px 0;">
+            <div class="modal-body">
                 ${coverLetter}
             </div>
-            <div style="margin-top: 30px; display: flex; gap: 10px; flex-wrap: wrap;">
-                <button onclick="copyCoverLetter(\`${data.cover_letter.replace(/`/g, '\\`')}\`, '${language}')" 
-                        style="background: #48bb78; color: white; padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">
+            <div class="modal-actions">
+                <button onclick="copyCoverLetter(\`${data.cover_letter.replace(/`/g, '\\`')}\`, '${language}')" class="modal-btn modal-btn-copy">
                     ${copyLabel}
                 </button>
-                <button onclick="closeModal()" 
-                        style="background: #cbd5e0; color: #2d3748; padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">
+                <button onclick="closeModal()" class="modal-btn modal-btn-close">
                     ${closeLabel}
                 </button>
             </div>
         </div>
     `;
-    
+
     document.body.appendChild(modal);
-    
+
     modal.addEventListener('click', (e) => {
         if (e.target === modal) {
             closeModal();

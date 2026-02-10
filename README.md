@@ -63,7 +63,7 @@ An intelligent job search assistant that uses AI to analyze job postings and mat
 *Daily email with top job matches and AI recommendations*
 
 ### 📊 Dashboard View
-![AI Job Agent Dashboard](screenshots/dashboard.png)
+![AI Job Agent Dashboard](screenshots/dashboard2.png)
 *Real-time job matching dashboard with statistics, scores, and skill analysis*
 
 
