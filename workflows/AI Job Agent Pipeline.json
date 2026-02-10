@@ -14,24 +14,24 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.3,
       "position": [
-        144,
-        -96
+        -1520,
+        592
       ],
-      "id": "719684d5-b47c-4d5c-927d-3637499fd7b4",
+      "id": "f48ad659-a176-497e-b453-aa0100b037de",
       "name": "Schedule Trigger"
     },
     {
       "parameters": {
-        "url": "=https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id=46ac4e40&app_key=d8cd2d8bb9ad3e801adb81f344e608f3&results_per_page=20&what=Data%20Scientist%20OR%20Data%20Analyst&where=London",
+        "url": "=https://api.adzuna.com/v1/api/jobs/fr/search/1?app_id=46ac4e40&app_key=d8cd2d8bb9ad3e801adb81f344e608f3&results_per_page=5&what=Data%20Scientist%20OR%20Data%20Analyst&where=Ile-de-France",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        336,
-        -96
+        -1296,
+        592
       ],
-      "id": "2ee9bba3-adf8-4d86-bb7e-65fe35fa0dd0",
+      "id": "56d1ce4a-8492-40af-ab9c-007f8c6972f6",
       "name": "Search Jobs - Adzuna"
     },
     {
@@ -41,10 +41,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        528,
-        -96
+        -1072,
+        592
       ],
-      "id": "797c5ecb-5dc3-48fe-982c-317e9941acf8",
+      "id": "7d84f6d1-26cd-4dd0-98f3-d52d9d60d701",
       "name": "Extract Jobs"
     },
     {
@@ -55,10 +55,10 @@
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        736,
-        -96
+        -848,
+        592
       ],
-      "id": "f1223fc3-0e59-4fd0-a8c3-b5951bd17ae0",
+      "id": "a6d33138-14d0-4185-b127-d4202e37b0bf",
       "name": "Split Out"
     },
     {
@@ -70,10 +70,10 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        992,
-        -96
+        -624,
+        592
       ],
-      "id": "0043b0e0-5c7c-4283-93b3-7f7609cfb6c4",
+      "id": "ad5e4b84-c377-4552-a172-93ba40700cb0",
       "name": "Loop Over Items"
     },
     {
@@ -103,6 +103,10 @@
             {
               "name": "company",
               "value": "=={{ $json.company }}"
+            },
+            {
+              "name": "job_url",
+              "value": "=\"=={{ $json.url }}\""
             }
           ]
         },
@@ -111,10 +115,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        1248,
-        -80
+        -400,
+        608
       ],
-      "id": "e5e55de1-ed4d-43ba-a3cc-a6b784b71a6d",
+      "id": "b9494161-ffaf-42c7-b978-a01f9d1dcda9",
       "name": "Analyze Job Fit"
     },
     {
@@ -124,10 +128,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1456,
-        -80
+        -160,
+        608
       ],
-      "id": "7d52c489-d569-437b-af10-a47d78971d62",
+      "id": "27f380de-4341-40ba-91a5-86a216614ae2",
       "name": "Format for Storage"
     },
     {
@@ -138,10 +142,10 @@
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
       "position": [
-        1376,
-        -288
+        -400,
+        400
       ],
-      "id": "b65900da-0d35-495d-9bfa-86ad98b1015c",
+      "id": "5486a81a-c394-4579-a648-a0803532779c",
       "name": "Aggregate"
     },
     {
@@ -155,10 +159,10 @@
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2.1,
       "position": [
-        2032,
-        -288
+        496,
+        400
       ],
-      "id": "40602f51-0db2-4088-8ad6-a10cc0424301",
+      "id": "2fb4642f-f2f5-455b-a201-90e12172e89e",
       "name": "Send email",
       "webhookId": "9f87847e-baa0-4651-b294-7ef64bb256d5",
       "credentials": {
@@ -170,29 +174,69 @@
     },
     {
       "parameters": {
-        "jsCode": "// Get the input - the jobs are nested inside a 'data' property\nconst inputData = $input.first().json;\n\n// Extract the jobs array from the nested structure\nlet jobs = [];\n\nif (Array.isArray(inputData) && inputData.length > 0 && inputData[0].data) {\n  // Structure: [{ data: [...jobs...] }]\n  jobs = inputData[0].data;\n} else if (inputData.data && Array.isArray(inputData.data)) {\n  // Structure: { data: [...jobs...] }\n  jobs = inputData.data;\n} else if (Array.isArray(inputData)) {\n  // Structure: [...jobs...]\n  jobs = inputData;\n}\n\nconsole.log(`Extracted ${jobs.length} jobs from input`);\n\n// Check if we have jobs\nif (!jobs || jobs.length === 0) {\n  console.log('No jobs found - returning empty email');\n  return [{\n    json: {\n      subject: `AI Job Agent - ${new Date().toLocaleDateString()} - No Matches Found`,\n      html: `<h2>🤖 Daily Job Search Results</h2>\n<p><strong>Date:</strong> ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>\n<p>No jobs matched your criteria today (≥65% fit score).</p>`\n    }\n  }];\n}\n\n// Calculate statistics from jobs\nconst totalJobs = jobs.length;\nconst avgScore = Math.round(jobs.reduce((sum, job) => sum + job.overall_score, 0) / totalJobs);\nconst avgSkillsMatch = Math.round(jobs.reduce((sum, job) => sum + job.skills_match_score, 0) / totalJobs);\n\nconst highPriority = jobs.filter(job => job.priority === 'High').length;\nconst mediumPriority = jobs.filter(job => job.priority === 'Medium').length;\nconst lowPriority = jobs.filter(job => job.priority === 'Low').length;\n\n// Sort jobs by score (highest first)\nconst sortedJobs = jobs.sort((a, b) => b.overall_score - a.overall_score);\n\nconsole.log(`Building email HTML for ${totalJobs} jobs`);\n\n// Build the HTML email\nconst html = `<h2>🤖 Daily Job Search Results</h2>\n<p><strong>Date:</strong> ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>\n\n<div style=\"background-color: #f0f0f0; padding: 15px; border-radius: 8px; margin: 20px 0;\">\n  <h3 style=\"margin-top: 0;\">📊 Summary Statistics</h3>\n  <p><strong>Total High Matches (≥65%):</strong> ${totalJobs}</p>\n  <p><strong>Average Overall Score:</strong> ${avgScore}%</p>\n  <p><strong>Average Skills Match:</strong> ${avgSkillsMatch}%</p>\n  <p><strong>By Priority:</strong> 🔴 High: ${highPriority} | 🟡 Medium: ${mediumPriority} | 🟢 Low: ${lowPriority}</p>\n</div>\n\n<hr>\n\n<h3>🌟 Top ${Math.min(5, sortedJobs.length)} Matches:</h3>\n\n${sortedJobs.slice(0, 5).map((job, index) => `\n<div style=\"border: 2px solid ${job.priority === 'High' ? '#F44336' : job.priority === 'Medium' ? '#FF9800' : '#4CAF50'}; border-radius: 8px; padding: 15px; margin: 15px 0; background-color: #f9f9f9;\">\n  <h4 style=\"color: #2C3E50; margin-top: 0;\">\n    ${index + 1}. ${job.title.replace(/^=/, '')}\n    <span style=\"background-color: ${job.overall_score >= 80 ? '#4CAF50' : job.overall_score >= 70 ? '#FFC107' : '#FF9800'}; color: white; padding: 5px 10px; border-radius: 20px; font-size: 14px;\">${job.overall_score}%</span>\n    <span style=\"background-color: ${job.priority === 'High' ? '#F44336' : job.priority === 'Medium' ? '#FF9800' : '#4CAF50'}; color: white; padding: 5px 10px; border-radius: 20px; font-size: 12px; margin-left: 5px;\">${job.priority}</span>\n  </h4>\n  \n  <p><strong>Company:</strong> ${job.company.replace(/^=/, '')}</p>\n  ${job.location ? `<p><strong>Location:</strong> ${job.location}</p>` : ''}\n  \n  <div style=\"background-color: #E3F2FD; padding: 10px; border-radius: 5px; margin: 10px 0;\">\n    <p style=\"margin: 0; font-size: 14px;\"><strong>📈 Score Breakdown:</strong></p>\n    <p style=\"margin: 5px 0; font-size: 13px;\">Skills: ${job.skills_match_score}% | Experience: ${job.experience_score}% | Domain: ${job.domain_score}% | Other: ${job.other_score}%</p>\n  </div>\n  \n  <p><strong>✅ Matching Skills (${job.matching_skills.length}):</strong> ${job.matching_skills.slice(0, 6).join(', ')}${job.matching_skills.length > 6 ? '...' : ''}</p>\n  \n  <p><strong>📚 Skills to Learn (${job.missing_skills.length}):</strong> ${job.missing_skills.slice(0, 4).join(', ')}${job.missing_skills.length > 4 ? '...' : ''}</p>\n  \n  <div style=\"background-color: #E8F5E9; padding: 10px; border-radius: 5px; margin-top: 10px;\">\n    <p style=\"margin: 0;\"><strong>💡 Recommendation:</strong></p>\n    <p style=\"margin: 5px 0; font-size: 14px;\">${job.recommendation}</p>\n  </div>\n  \n  <div style=\"margin-top: 15px;\">\n    <p style=\"margin: 5px 0;\"><strong>Should Apply:</strong> <span style=\"color: ${job.should_apply ? '#4CAF50' : '#F44336'}; font-weight: bold;\">${job.should_apply ? '✓ YES' : '✗ NO'}</span></p>\n  </div>\n  \n  ${job.url ? `<p style=\"margin-top: 15px;\"><a href=\"${job.url}\" style=\"background-color: #2196F3; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;\">View Job Details →</a></p>` : ''}\n</div>\n`).join('')}\n\n<hr>\n\n<div style=\"background-color: #FFF3CD; padding: 15px; border-radius: 8px; margin: 20px 0;\">\n  <h4 style=\"margin-top: 0;\">💼 Next Steps</h4>\n  <ul>\n    <li>Review high-priority matches first (🔴)</li>\n    <li>Check your <a href=\"http://localhost:5001\">dashboard</a> for all ${totalJobs} matches</li>\n    <li>Focus on jobs with \"Should Apply: YES\"</li>\n    <li>Consider upskilling in the most common missing skills</li>\n  </ul>\n</div>\n\n<p style=\"color: #999; font-size: 12px; margin-top: 30px;\">Automated message from your AI Job Agent. Jobs analyzed daily using Claude AI, filtered to ≥65% fit score.</p>\n`;\n\n// Create subject line\nconst subject = `AI Job Agent - ${new Date().toLocaleDateString()} - ${totalJobs} High Matches Found`;\n\nconsole.log('Email HTML built successfully');\n\n// Return formatted data for Gmail node\nreturn [{\n  json: {\n    subject: subject,\n    html: html,\n    total_jobs: totalJobs\n  }\n}];"
+        "jsCode": "// Helper function to clean URLs (remove quotes and leading = signs)\nfunction cleanUrl(url) {\n  if (!url) return null;\n  return url.toString().trim().replace(/^\"+/, '').replace(/\"+$/, '').replace(/^=+/, '');\n}\n\n// Get the input - the jobs are nested inside a 'data' property\nconst inputData = $input.first().json;\n\n// Extract the jobs array from the nested structure\nlet jobs = [];\n\nif (Array.isArray(inputData) && inputData.length > 0 && inputData[0].data) {\n  // Structure: [{ data: [...jobs...] }]\n  jobs = inputData[0].data;\n} else if (inputData.data && Array.isArray(inputData.data)) {\n  // Structure: { data: [...jobs...] }\n  jobs = inputData.data;\n} else if (Array.isArray(inputData)) {\n  // Structure: [...jobs...]\n  jobs = inputData;\n}\n\nconsole.log(`Extracted ${jobs.length} jobs from input`);\n\n// Check if we have jobs\nif (!jobs || jobs.length === 0) {\n  console.log('No jobs found - returning empty email');\n  return [{\n    json: {\n      subject: `AI Job Agent - ${new Date().toLocaleDateString()} - No Matches Found`,\n      html: `<h2>🤖 Daily Job Search Results</h2>\n<p><strong>Date:</strong> ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>\n<p>No jobs matched your criteria today (≥65% fit score).</p>`\n    }\n  }];\n}\n\n// Calculate statistics from jobs\nconst totalJobs = jobs.length;\nconst avgScore = Math.round(jobs.reduce((sum, job) => sum + job.overall_score, 0) / totalJobs);\nconst avgSkillsMatch = Math.round(jobs.reduce((sum, job) => sum + job.skills_match_score, 0) / totalJobs);\n\nconst highPriority = jobs.filter(job => job.priority === 'High').length;\nconst mediumPriority = jobs.filter(job => job.priority === 'Medium').length;\nconst lowPriority = jobs.filter(job => job.priority === 'Low').length;\n\n// Sort jobs by score (highest first)\nconst sortedJobs = jobs.sort((a, b) => b.overall_score - a.overall_score);\n\nconsole.log(`Building email HTML for ${totalJobs} jobs`);\n\n// Build the HTML email\nconst html = `<h2>🤖 Daily Job Search Results</h2>\n<p><strong>Date:</strong> ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>\n\n<div style=\"background-color: #f0f0f0; padding: 15px; border-radius: 8px; margin: 20px 0;\">\n  <h3 style=\"margin-top: 0;\">📊 Summary Statistics</h3>\n  <p><strong>Total High Matches (≥65%):</strong> ${totalJobs}</p>\n  <p><strong>Average Overall Score:</strong> ${avgScore}%</p>\n  <p><strong>Average Skills Match:</strong> ${avgSkillsMatch}%</p>\n  <p><strong>By Priority:</strong> 🔴 High: ${highPriority} | 🟡 Medium: ${mediumPriority} | 🟢 Low: ${lowPriority}</p>\n</div>\n\n<hr>\n\n<h3>🌟 Top ${Math.min(5, sortedJobs.length)} Matches:</h3>\n\n${sortedJobs.slice(0, 5).map((job, index) => {\n  const jobUrl = cleanUrl(job.url);\n  return `\n<div style=\"border: 2px solid ${job.priority === 'High' ? '#F44336' : job.priority === 'Medium' ? '#FF9800' : '#4CAF50'}; border-radius: 8px; padding: 15px; margin: 15px 0; background-color: #f9f9f9;\">\n  <h4 style=\"color: #2C3E50; margin-top: 0;\">\n    ${index + 1}. ${job.title.replace(/^=/, '')}\n    <span style=\"background-color: ${job.overall_score >= 80 ? '#4CAF50' : job.overall_score >= 70 ? '#FFC107' : '#FF9800'}; color: white; padding: 5px 10px; border-radius: 20px; font-size: 14px;\">${job.overall_score}%</span>\n    <span style=\"background-color: ${job.priority === 'High' ? '#F44336' : job.priority === 'Medium' ? '#FF9800' : '#4CAF50'}; color: white; padding: 5px 10px; border-radius: 20px; font-size: 12px; margin-left: 5px;\">${job.priority}</span>\n  </h4>\n  \n  <p><strong>Company:</strong> ${job.company.replace(/^=/, '')}</p>\n  ${job.location ? `<p><strong>Location:</strong> ${job.location}</p>` : ''}\n  \n  <div style=\"background-color: #E3F2FD; padding: 10px; border-radius: 5px; margin: 10px 0;\">\n    <p style=\"margin: 0; font-size: 14px;\"><strong>📈 Score Breakdown:</strong></p>\n    <p style=\"margin: 5px 0; font-size: 13px;\">Skills: ${job.skills_match_score}% | Experience: ${job.experience_score}% | Domain: ${job.domain_score}% | Other: ${job.other_score}%</p>\n  </div>\n  \n  <p><strong>✅ Matching Skills (${job.matching_skills.length}):</strong> ${job.matching_skills.slice(0, 6).join(', ')}${job.matching_skills.length > 6 ? '...' : ''}</p>\n  \n  <p><strong>📚 Skills to Learn (${job.missing_skills.length}):</strong> ${job.missing_skills.slice(0, 4).join(', ')}${job.missing_skills.length > 4 ? '...' : ''}</p>\n  \n  <div style=\"background-color: #E8F5E9; padding: 10px; border-radius: 5px; margin-top: 10px;\">\n    <p style=\"margin: 0;\"><strong>💡 Recommendation:</strong></p>\n    <p style=\"margin: 5px 0; font-size: 14px;\">${job.recommendation}</p>\n  </div>\n  \n  <div style=\"margin-top: 15px;\">\n    <p style=\"margin: 5px 0;\"><strong>Should Apply:</strong> <span style=\"color: ${job.should_apply ? '#4CAF50' : '#F44336'}; font-weight: bold;\">${job.should_apply ? '✓ YES' : '✗ NO'}</span></p>\n  </div>\n  \n  ${jobUrl ? `<p style=\"margin-top: 15px;\"><a href=\"${jobUrl}\" style=\"background-color: #2196F3; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;\">View Job Details →</a></p>` : ''}\n</div>\n`;\n}).join('')}\n\n<hr>\n\n<div style=\"background-color: #FFF3CD; padding: 15px; border-radius: 8px; margin: 20px 0;\">\n  <h4 style=\"margin-top: 0;\">💼 Next Steps</h4>\n  <ul>\n    <li>Review high-priority matches first (🔴)</li>\n    <li>Check your <a href=\"http://localhost:5001\">dashboard</a> for all ${totalJobs} matches</li>\n    <li>Focus on jobs with \"Should Apply: YES\"</li>\n    <li>Consider upskilling in the most common missing skills</li>\n  </ul>\n</div>\n\n<p style=\"color: #999; font-size: 12px; margin-top: 30px;\">Automated message from your AI Job Agent. Jobs analyzed daily using Claude AI, filtered to ≥65% fit score.</p>\n`;\n\n// Create subject line\nconst subject = `AI Job Agent - ${new Date().toLocaleDateString()} - ${totalJobs} High Matches Found`;\n\nconsole.log('Email HTML built successfully');\n\n// Return formatted data for Gmail node\nreturn [{\n  json: {\n    subject: subject,\n    html: html,\n    total_jobs: totalJobs\n  }\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1792,
-        -288
+        48,
+        304
       ],
-      "id": "f9ce894e-75c9-46a7-ba9f-0d3a07888f2d",
+      "id": "7035919f-a756-462d-bfb7-644d226c7839",
       "name": "Build Email HTML"
     },
     {
       "parameters": {
-        "jsCode": "// Get all jobs from aggregate\nconst inputData = $input.first().json;\n\nlet allJobs = [];\nif (Array.isArray(inputData) && inputData.length > 0 && inputData[0].data) {\n  allJobs = inputData[0].data;\n} else if (inputData.data && Array.isArray(inputData.data)) {\n  allJobs = inputData.data;\n} else if (Array.isArray(inputData)) {\n  allJobs = inputData;\n}\n\nconsole.log(`📊 Total jobs analyzed: ${allJobs.length}`);\n\n// Filter to only jobs with score >= 65\nconst filteredJobs = allJobs.filter(job => job.overall_score >= 65);\n\nconsole.log(`✅ Jobs above threshold (≥65%): ${filteredJobs.length}`);\nconsole.log(`❌ Jobs below threshold: ${allJobs.length - filteredJobs.length}`);\n\n// Return filtered jobs in same structure expected by email builder\nreturn [{\n  json: {\n    data: filteredJobs\n  }\n}];"
+        "jsCode": "// Get all jobs from aggregate\nconst inputData = $input.first().json;\n\nlet allJobs = [];\nif (Array.isArray(inputData) && inputData.length > 0 && inputData[0].data) {\n  allJobs = inputData[0].data;\n} else if (inputData.data && Array.isArray(inputData.data)) {\n  allJobs = inputData.data;\n} else if (Array.isArray(inputData)) {\n  allJobs = inputData;\n}\n\nconsole.log(`📊 Total jobs analyzed: ${allJobs.length}`);\n\n// Filter to only jobs with score >= 65\nconst filteredJobs = allJobs.filter(job => job.overall_score >= 50);\n\nconsole.log(`✅ Jobs above threshold (≥65%): ${filteredJobs.length}`);\nconsole.log(`❌ Jobs below threshold: ${allJobs.length - filteredJobs.length}`);\n\n// Return filtered jobs in same structure expected by email builder\nreturn [{\n  json: {\n    data: filteredJobs\n  }\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1584,
-        -288
+        -176,
+        400
       ],
-      "id": "f7c13b54-3dfe-4edb-b1f2-d6b003a537cc",
-      "name": "Code in JavaScript"
+      "id": "2b88f341-eceb-4815-9169-b9a00fbe42bf",
+      "name": "Filter Jobs"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:5000/save-results",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($input.all()) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        48,
+        496
+      ],
+      "id": "232424cb-ac9d-4971-8693-345fbccaf06f",
+      "name": "Save Results"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        272,
+        400
+      ],
+      "id": "fab0233e-268d-4dff-a712-a48fbdab0639",
+      "name": "Merge"
     }
   ],
   "pinData": {},
@@ -285,7 +329,7 @@
       "main": [
         [
           {
-            "node": "Code in JavaScript",
+            "node": "Filter Jobs",
             "type": "main",
             "index": 0
           }
@@ -296,18 +340,45 @@
       "main": [
         [
           {
-            "node": "Send email",
+            "node": "Merge",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Code in JavaScript": {
+    "Filter Jobs": {
       "main": [
         [
           {
             "node": "Build Email HTML",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Save Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Results": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Send email",
             "type": "main",
             "index": 0
           }
@@ -320,7 +391,7 @@
     "executionOrder": "v1",
     "availableInMCP": false
   },
-  "versionId": "e1d0bb30-9535-4342-88b5-c604538197a3",
+  "versionId": "9798b95e-6b02-49e7-94eb-ede42654ad82",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "cd4e343eada55aea98028d08497b0ede2cd754f100b2e0c81f309a635533e758"
