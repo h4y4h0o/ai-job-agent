@@ -167,8 +167,10 @@ def generate_cover_letter(job_data, cv_content=None, language="fr"):
         }
 
     except Exception as e:
-        print(f" Error generating cover letter: {e}")
-        return None
+        print(f"Error generating cover letter: {e}")
+        import traceback
+        traceback.print_exc()
+        raise
 
 
 def save_cover_letter(cover_letter_data, filename=None):

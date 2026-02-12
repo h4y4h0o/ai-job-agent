@@ -357,26 +357,31 @@ def dashboard_generate_cover_letter(job_index):
     job = jobs[job_index]
     language = request.args.get("language", "fr")
 
-    # Call the function directly instead of HTTP request
-    result = generate_cover_letter(
-        {
-            "job_title": job["title"],
-            "company": job["company"],
-            "job_description": job.get("description", ""),
-            "matching_skills": job["matching_skills"],
-            "missing_skills": job["missing_skills"],
-        },
-        language=language,
-    )
+    try:
+        result = generate_cover_letter(
+            {
+                "job_title": job.get("title", job.get("job_title", "Unknown")),
+                "company": job.get("company", "Unknown"),
+                "job_description": job.get("description", job.get("job_description", "")),
+                "matching_skills": job.get("matching_skills", []),
+                "missing_skills": job.get("missing_skills", []),
+            },
+            language=language,
+        )
 
-    if result:
-        try:
-            save_cover_letter(result)
-        except Exception as e:
-            print(f"Could not save cover letter to file: {e}")
-        return jsonify(result)
-    else:
-        return jsonify({"error": "Failed to generate"}), 500
+        if result:
+            try:
+                save_cover_letter(result)
+            except Exception as e:
+                print(f"Could not save cover letter to file: {e}")
+            return jsonify(result)
+        else:
+            return jsonify({"error": "generate_cover_letter returned None"}), 500
+    except Exception as e:
+        print(f"Cover letter generation error: {e}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
 
 
 # ============================================================
