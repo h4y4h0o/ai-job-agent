@@ -660,7 +660,7 @@ function generateCoverLetter(jobIndex, language) {
     button.disabled = true;
     button.textContent = language === 'fr' ? '⏳ Génération...' : '⏳ Generating...';
     
-    fetch(`/generate-cover-letter/${jobIndex}?language=${language}`)
+    fetch(`/dashboard/generate-cover-letter/${jobIndex}?language=${language}`)
         .then(response => response.json())
         .then(data => {
             if (data.cover_letter) {

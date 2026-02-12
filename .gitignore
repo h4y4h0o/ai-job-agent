@@ -35,3 +35,6 @@ test_app.py
 *.tmp
 
 n8n-credentials.txt
+
+# Personal data
+my_cv.txt
