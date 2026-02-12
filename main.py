@@ -370,7 +370,10 @@ def dashboard_generate_cover_letter(job_index):
     )
 
     if result:
-        save_cover_letter(result)
+        try:
+            save_cover_letter(result)
+        except Exception as e:
+            print(f"Could not save cover letter to file: {e}")
         return jsonify(result)
     else:
         return jsonify({"error": "Failed to generate"}), 500

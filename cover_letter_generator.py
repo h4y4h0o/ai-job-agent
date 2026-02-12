@@ -18,7 +18,10 @@ def _get_client():
 
 
 def load_cv():
-    """Load CV content"""
+    """Load CV content from env var (production) or file (local)"""
+    cv_content = os.getenv("CV_CONTENT")
+    if cv_content:
+        return cv_content
     cv_path = os.path.join(os.path.dirname(__file__), "my_cv.txt")
     with open(cv_path, "r") as f:
         return f.read()
