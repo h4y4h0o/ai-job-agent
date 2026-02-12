@@ -21,23 +21,30 @@ app = Flask(__name__)
 
 CACHE = {}
 
-# Initialize Groq LLM
-llm = ChatGroq(
-    model="llama-3.3-70b-versatile",
-    groq_api_key=os.getenv("GROQ_API_KEY"),
-    temperature=0,
-)
+# Lazy initialization - avoids crash if keys not set at import time
+_llm = None
 
-# Load CV: from environment variable (production) or file (local)
-CV_CONTENT = os.getenv("CV_CONTENT")
-if CV_CONTENT:
-    USER_CV = CV_CONTENT
-    print(f"CV loaded from environment variable: {len(USER_CV)} characters")
-else:
+
+def get_llm():
+    global _llm
+    if _llm is None:
+        _llm = ChatGroq(
+            model="llama-3.3-70b-versatile",
+            groq_api_key=os.getenv("GROQ_API_KEY"),
+            temperature=0,
+        )
+    return _llm
+
+
+def get_cv():
+    cv_content = os.getenv("CV_CONTENT")
+    if cv_content:
+        return cv_content
     cv_path = os.path.join(os.path.dirname(__file__), "my_cv.txt")
-    with open(cv_path, "r", encoding="utf-8") as f:
-        USER_CV = f.read()
-    print(f"CV loaded from file: {len(USER_CV)} characters")
+    if os.path.exists(cv_path):
+        with open(cv_path, "r", encoding="utf-8") as f:
+            return f.read()
+    return "CV not configured. Set CV_CONTENT environment variable."
 
 # Job results file path
 RESULTS_FILE = os.path.join(os.path.dirname(__file__), "job_results.json")
@@ -127,7 +134,7 @@ def analyze_fit():
                 return jsonify({"error": f"Missing required field: {field}"}), 400
 
         prompt_text = FIT_ANALYSIS_PROMPT.format(
-            cv=USER_CV,
+            cv=get_cv(),
             job_title=data["job_title"],
             company=data["company"],
             location=data.get("location", "Not specified"),
@@ -135,7 +142,7 @@ def analyze_fit():
         )
 
         print(f"Analyzing: {data['job_title']} at {data['company']}")
-        response = llm.invoke(prompt_text)
+        response = get_llm().invoke(prompt_text)
         response_text = response.content
 
         json_start = response_text.find("{")

@@ -6,7 +6,15 @@ import json
 
 load_dotenv()
 
-client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+# Lazy initialization - avoids crash if GROQ_API_KEY not set at import time
+_client = None
+
+
+def _get_client():
+    global _client
+    if _client is None:
+        _client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+    return _client
 
 
 def load_cv():
@@ -122,7 +130,7 @@ def generate_cover_letter(job_data, cv_content=None, language="fr"):
         print("✅ Selected FRENCH prompt")
 
     try:
-        response = client.chat.completions.create(
+        response = _get_client().chat.completions.create(
             model="llama-3.3-70b-versatile",
             messages=[{"role": "user", "content": prompt}],
             temperature=0.7,
