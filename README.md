@@ -10,7 +10,7 @@ An intelligent job search assistant that uses AI to analyze job postings, match 
 
 ### Live Demo
 - **Dashboard & API:** https://web-production-134c0.up.railway.app
-- **n8n Workflow:** https://ai-job-agent-production-91f0.up.railway.app
+- **n8n Workflow:** https://ai-job-agent-production-91f0.up.railway.app (login required) — see [screenshot](screenshots/n8n-workflow.png) and [workflow JSON](workflows/AI%20Job%20Agent%20Pipeline.json)
 
 
 ## What It Does
