@@ -8,6 +8,10 @@
 
 An intelligent job search assistant that uses AI to analyze job postings, match them with your CV, generate cover letters, and email you daily recommendations — fully automated and deployed on Railway.
 
+### Live Demo
+- **Dashboard & API:** https://web-production-134c0.up.railway.app
+- **n8n Workflow:** https://ai-job-agent-production-91f0.up.railway.app
+
 
 ## What It Does
 
